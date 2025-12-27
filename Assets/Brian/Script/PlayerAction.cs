@@ -6,6 +6,10 @@ using TMPro;
 
 public class PlayerAction : MonoBehaviour
 {
+    [Header("Spawn Prefab")]
+    public GameObject magic;
+
+    [Header("UI")]
     public GameObject UISurface;
     public TextMeshProUGUI actionText;
 
@@ -142,10 +146,12 @@ public class PlayerAction : MonoBehaviour
                 // attack animation + small forward lunge
                 if (animator != null)
                     animator.SetTrigger("attack");
-                if (rb != null)
+                // network spawn magic prefab in front of player
+                if (pv != null && pv.IsMine && magic != null)
                 {
-                    float attackLunge = 2f;
-                    rb.AddForce(dirVec * attackLunge, ForceMode.VelocityChange);
+                    Vector3 spawnPos = transform.position + dirVec.normalized * 1.5f + Vector3.up * 1.0f;
+                    Quaternion spawnRot = Quaternion.LookRotation(dirVec, Vector3.up);
+                    PhotonNetwork.Instantiate(magic.name, spawnPos, spawnRot);
                 }
                 break;
 

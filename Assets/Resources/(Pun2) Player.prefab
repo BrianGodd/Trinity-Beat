@@ -6445,8 +6445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1772963b6e69b24bbee832704edeac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magic: {fileID: 347508099352505736, guid: 871015ba455ac73419818fbbd69f8f09, type: 3}
   UISurface: {fileID: 4068206923874515137}
-  actionText: {fileID: 0}
+  actionText: {fileID: 7519759162490677695}
   comboCaster: {fileID: 0}
   beatClock: {fileID: 0}
 --- !u!1 &4419919470672744050
