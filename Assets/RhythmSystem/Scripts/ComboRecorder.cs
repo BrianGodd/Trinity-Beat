@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ComboRecorder : MonoBehaviour
@@ -8,12 +9,30 @@ public class ComboRecorder : MonoBehaviour
     public TimingPattern timingPattern;
     public InputBindingMap inputBindingMap;
 
+    [Header("Runtime Toggles")]
+    public bool recordingEnabled = true;
+    public bool castingEnabled = true;
+
     [Header("Rules")]
     public bool allowCastWithMissingInputs = true;
+
+    [Serializable]
+    public struct HitWindowBeats
+    {
+        [Min(0f)] public float earlyBeats; // how many beats BEFORE expected time is valid
+        [Min(0f)] public float lateBeats;  // how many beats AFTER  expected time is valid
+    }
+
+    [Header("Hit Windows (centered on expected time)")]
+    [Tooltip("Default example: early=0.5, late=0.5 => [T-0.5beat, T+0.5beat].")]
+    public HitWindowBeats beat0Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
+    public HitWindowBeats beat1Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
+    public HitWindowBeats beat2Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
 
     [Header("Debug")]
     public bool logBeats = true;
     public bool logInputs = true;
+    public bool logMisses = true;
     public bool logIgnoredExtraInputs = false;
 
     [Serializable]
@@ -27,10 +46,10 @@ public class ComboRecorder : MonoBehaviour
         public BeatActionType type;
         public BeatDirection9 dir;
 
-        public double pressTime;       // Time.timeAsDouble
-        public double expectedTime;    // beatStart + offset*beatDur
-        public double signedErrorSec;  // press - expected
-        public double signedErrorMs;   // signedErrorSec * 1000
+        public double pressTime;
+        public double expectedTime;
+        public double signedErrorSec;
+        public double signedErrorMs;
     }
 
     [Serializable]
@@ -53,17 +72,12 @@ public class ComboRecorder : MonoBehaviour
     }
 
     public event Action<ComboData> OnComboReady;
+    public event Action<Hit> OnHitRecorded;
 
-    public ComboData LastCombo { get; private set; } = new ComboData();
-    public int CurrentBeatInCycle { get; private set; } = 0;
+    // Store combos by cycle so early hits (e.g., for next cycle slot0) still land correctly
+    private readonly Dictionary<int, ComboData> _combos = new Dictionary<int, ComboData>();
 
-    private bool[] _filled = new bool[3];
-
-    private void Awake()
-    {
-        // Safe defaults so it works immediately on Play
-        BeginCycle(0);
-    }
+    public ComboData LastCombo { get; private set; }
 
     private void OnEnable()
     {
@@ -79,104 +93,67 @@ public class ComboRecorder : MonoBehaviour
 
     private void HandleBeat(int beatInCycle, int cycleIndex, double beatStartTime)
     {
-        CurrentBeatInCycle = beatInCycle;
-
         if (logBeats)
             Debug.Log($"[Beat] cycle={cycleIndex} beat={beatInCycle} beatStart={beatStartTime:F6}");
 
         if (beatInCycle == 0)
-        {
-            BeginCycle(cycleIndex);
-        }
+            EnsureCombo(cycleIndex);
 
         if (beatInCycle == 3)
-        {
-            CastNow();
-        }
-    }
-
-    private void BeginCycle(int cycleIndex)
-    {
-        Array.Fill(_filled, false);
-
-        LastCombo = new ComboData
-        {
-            cycleIndex = cycleIndex,
-            patternName = timingPattern != null ? timingPattern.patternName : "(no pattern)",
-            hits = new Hit[3]
-        };
-
-        for (int i = 0; i < 3; i++)
-        {
-            LastCombo.hits[i] = new Hit
-            {
-                hasInput = false,
-                beatSlot = i,
-                key = KeyCode.None,
-                glyph = '_',
-                type = BeatActionType.Move,
-                dir = BeatDirection9.Center,
-                pressTime = 0,
-                expectedTime = 0,
-                signedErrorSec = 0,
-                signedErrorMs = 0
-            };
-        }
+            CastCycle(cycleIndex);
     }
 
     private void Update()
     {
+        if (!recordingEnabled) return;
         if (beatClock == null || timingPattern == null || inputBindingMap == null) return;
-
-        // Only accept inputs on beats 0..2
-        if (CurrentBeatInCycle < 0 || CurrentBeatInCycle > 2) return;
-
-        int slot = CurrentBeatInCycle;
-
-        // If already filled, optionally log extra presses (but still ignore)
-        if (_filled[slot])
-        {
-            if (logIgnoredExtraInputs)
-            {
-                foreach (var e in inputBindingMap.Entries)
-                {
-                    if (Input.GetKeyDown(e.key))
-                        Debug.Log($"[Input IGNORED] slot={slot} key={e.key} (already filled this beat)");
-                }
-            }
-            return;
-        }
 
         foreach (var e in inputBindingMap.Entries)
         {
             if (!Input.GetKeyDown(e.key)) continue;
-
-            RecordHit(slot, e);
-            _filled[slot] = true;
-            return; // one input per beat
+            HandleKeyPress(e);
+            return;
         }
     }
 
-    private void RecordHit(int slot, InputBindingMap.Entry e)
+    private void HandleKeyPress(InputBindingMap.Entry e)
     {
         double pressTime = beatClock.Now;
-        double beatDur = beatClock.BeatDurationSec;
 
-        // Ground-truth expected time for THIS slot
-        double beatStart = beatClock.CurrentBeatStartTime;
-        double expectedOffset = timingPattern.GetExpectedOffset012(slot);
-        double expectedTime = beatStart + expectedOffset * beatDur;
+        if (!TryResolveSlotByWindow(pressTime, out int cycleIndex, out int slot012, out double expectedTime))
+        {
+            if (logMisses)
+                Debug.Log($"[MISS] key={e.key} (no slot window matched)");
+            return;
+        }
 
-        double errSec = pressTime - expectedTime;
+        // disallow negative cycles
+        if (cycleIndex < 0) 
+        {
+            if (logMisses)
+                Debug.Log($"[MISS] key={e.key} (resolved to negative cycle {cycleIndex})");
+            return;
+        }
+
+        var combo = EnsureCombo(cycleIndex);
+
+        if (combo.hits[slot012].hasInput)
+        {
+            if (logIgnoredExtraInputs)
+                Debug.Log($"[Input IGNORED] cycle={cycleIndex} slot={slot012} already filled.");
+            return;
+        }
 
         char glyphChar = '_';
         if (!string.IsNullOrEmpty(e.glyph))
             glyphChar = e.glyph[0];
 
+        double errSec = pressTime - expectedTime;
+
         var hit = new Hit
         {
             hasInput = true,
-            beatSlot = slot,
+            beatSlot = slot012,
             key = e.key,
             glyph = glyphChar,
             type = e.type,
@@ -187,26 +164,144 @@ public class ComboRecorder : MonoBehaviour
             signedErrorMs = errSec * 1000.0
         };
 
-        LastCombo.hits[slot] = hit;
+        combo.hits[slot012] = hit;
+        LastCombo = combo;
+
+        OnHitRecorded?.Invoke(hit);
 
         if (logInputs)
         {
-            Debug.Log($"[Input] slot={slot} key={e.key} glyph='{hit.glyph}' type={hit.type} dir={hit.dir} " +
-                      $"expectedOffset={expectedOffset:0.###} err={hit.signedErrorSec:+0.000;-0.000;+0.000}s ({hit.signedErrorMs:+0.0;-0.0;+0.0}ms)");
+            Debug.Log($"[Input] cycle={cycleIndex} slot={slot012} key={e.key} glyph='{hit.glyph}' type={hit.type} dir={hit.dir} " +
+                      $"err={hit.signedErrorSec:+0.000;-0.000;+0.000}s ({hit.signedErrorMs:+0.0;-0.0;+0.0}ms)");
         }
     }
 
-    private void CastNow()
+    private ComboData EnsureCombo(int cycleIndex)
     {
+        if (_combos.TryGetValue(cycleIndex, out var existing))
+            return existing;
+
+        var combo = new ComboData
+        {
+            cycleIndex = cycleIndex,
+            patternName = timingPattern != null ? timingPattern.patternName : "(no pattern)",
+            hits = new Hit[3]
+        };
+
+        for (int i = 0; i < 3; i++)
+        {
+            combo.hits[i] = new Hit
+            {
+                hasInput = false,
+                beatSlot = i,
+                key = KeyCode.None,
+                glyph = '_',
+                type = BeatActionType.Move,
+                dir = BeatDirection9.Center
+            };
+        }
+
+        _combos[cycleIndex] = combo;
+        return combo;
+    }
+
+    private void CastCycle(int cycleIndex)
+    {
+        if (!castingEnabled) return;
+
+        var combo = EnsureCombo(cycleIndex);
+
         if (!allowCastWithMissingInputs)
         {
             for (int i = 0; i < 3; i++)
+                if (!combo.hits[i].hasInput) return;
+        }
+
+        LastCombo = combo;
+        OnComboReady?.Invoke(combo);
+
+        // cleanup
+        _combos.Remove(cycleIndex - 2);
+    }
+
+    // ---------------------------
+    // Window-based slot resolution
+    // ---------------------------
+    private HitWindowBeats GetWindow(int slot012)
+    {
+        return slot012 switch
+        {
+            0 => beat0Window,
+            1 => beat1Window,
+            2 => beat2Window,
+            _ => beat0Window
+        };
+    }
+
+    private bool TryResolveSlotByWindow(double t, out int bestCycle, out int bestSlot, out double bestExpectedTime)
+    {
+        bestCycle = 0;
+        bestSlot = 0;
+        bestExpectedTime = 0;
+
+        // Must be 4 beats per cycle for this system
+        if (beatClock.beatsPerCycle != 4)
+        {
+            Debug.LogError("[ComboRecorder] Window resolver assumes beatsPerCycle=4.");
+            return false;
+        }
+
+        double start = beatClock.StartTime;
+        double beatDur = beatClock.BeatDurationSec;
+
+        if (t < start) return false; // before rhythm starts
+
+        int absBeatIndex = (int)Math.Floor((t - start) / beatDur);
+        int guessCycle = absBeatIndex / 4;
+
+        // Evaluate nearby cycles (prev/current/next) and slots (0..2)
+        bool found = false;
+        double bestAbsErr = double.MaxValue;
+
+        for (int cycle = guessCycle - 1; cycle <= guessCycle + 1; cycle++)
+        {
+            for (int slot = 0; slot <= 2; slot++)
             {
-                if (!LastCombo.hits[i].hasInput)
-                    return;
+                // Disallow writing slot2 once cast beat has started for that cycle
+                if (slot == 2)
+                {
+                    double castStart = start + (cycle * 4 + 3) * beatDur; // beat3 start
+                    if (t >= castStart) continue;
+                }
+
+                double expectedTime = ExpectedTime(cycle, slot, start, beatDur);
+                double errSec = t - expectedTime;
+
+                var w = GetWindow(slot);
+                double earlySec = w.earlyBeats * beatDur;
+                double lateSec  = w.lateBeats  * beatDur;
+
+                if (errSec < -earlySec || errSec > lateSec)
+                    continue; // outside this slot window => not a match
+
+                double absErr = Math.Abs(errSec);
+                if (absErr < bestAbsErr)
+                {
+                    bestAbsErr = absErr;
+                    bestCycle = cycle;
+                    bestSlot = slot;
+                    bestExpectedTime = expectedTime;
+                    found = true;
+                }
             }
         }
 
-        OnComboReady?.Invoke(LastCombo);
+        return found;
+    }
+
+    private double ExpectedTime(int cycle, int slot012, double start, double beatDur)
+    {
+        float off = timingPattern.GetExpectedOffset012(slot012);
+        return start + (cycle * 4 + slot012) * beatDur + off * beatDur;
     }
 }
