@@ -149,7 +149,7 @@ public class PlayerAction : MonoBehaviour
                 // network spawn magic prefab in front of player
                 if (pv != null && pv.IsMine && magic != null)
                 {
-                    Vector3 spawnPos = transform.position + dirVec.normalized * 1.5f + Vector3.up * 1.0f;
+                    Vector3 spawnPos = transform.position + dirVec.normalized * 15.0f + Vector3.up * 1.0f;
                     Quaternion spawnRot = Quaternion.LookRotation(dirVec, Vector3.up);
                     PhotonNetwork.Instantiate(magic.name, spawnPos, spawnRot);
                 }
