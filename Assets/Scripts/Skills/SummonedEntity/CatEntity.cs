@@ -7,7 +7,7 @@ public class CatEntity : SummonedEntity
     void OnTriggerEnter(Collider other)
     {
         WeaponEffect weaponEffect = other.gameObject.GetComponent<WeaponEffect>();
-        if(weaponEffect.GetCurrentCatDistane() > Vector3.Distance(gameObject.transform.position, weaponEffect.transform.position))
+        if(weaponEffect != null && weaponEffect.GetCurrentCatDistane() > Vector3.Distance(gameObject.transform.position, weaponEffect.transform.position))
         {
             weaponEffect.catEntity = this;
         }

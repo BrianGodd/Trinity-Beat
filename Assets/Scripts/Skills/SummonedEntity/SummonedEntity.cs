@@ -7,14 +7,14 @@ using System;
 public class SummonedEntity : MonoBehaviour
 {
     [SerializeField]
-    private int lifeCycle = 0;
+    protected int lifeCycle = 0;
 
     public virtual void Start()
     {
         SkillManager.Instance.AddIntoEntitiesList(this);
         if(lifeCycle == 0)
         {
-            SetLifeCycle(3);
+            SetLifeCycle(5);
         }
     }
     public void SetLifeCycle(int cycle)

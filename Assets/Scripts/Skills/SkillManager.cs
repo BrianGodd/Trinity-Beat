@@ -46,7 +46,8 @@ public class SkillManager : MonoBehaviour
             if (!prefabDict.ContainsKey(entry.key))
                 prefabDict.Add(entry.key, entry.prefab);
         }
-
+        // TODO: get user transform?
+        player = transform;
     }
 
     // Update is called once per frame

@@ -18,7 +18,7 @@ public class DogEntity : SummonedEntity
     }
 
     Transform FindClosestPlayer()
-    {
+    {// TODO: get user transform?
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         Transform closest = null;
         float minDist = float.MaxValue;
