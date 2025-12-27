@@ -47296,7 +47296,8 @@ GameObject:
   - component: {fileID: 1391252083}
   - component: {fileID: 1391252085}
   - component: {fileID: 1391252084}
-  m_Layer: 0
+  - component: {fileID: 1391252086}
+  m_Layer: 6
   m_Name: Box411_11 - Default_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47368,6 +47369,27 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391252082}
   m_Mesh: {fileID: 4300000, guid: 21dd5914440e0be49804e22269ec3842, type: 2}
+--- !u!65 &1391252086
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391252082}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 348.84805, y: 139.57085, z: 94.924515}
+  m_Center: {x: 1.4833747, y: 0.048049957, z: -47.462204}
 --- !u!1 &1391715892
 GameObject:
   m_ObjectHideFlags: 0
