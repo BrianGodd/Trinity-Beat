@@ -29,6 +29,8 @@ namespace Photon.Pun.UtilityScripts
     {
         public enum SpawnSequence { Connection, Random, RoundRobin }
 
+        public bool DebugRoom = false;
+
         #region Inspector Items
 
         // Old field, only here for backwards compat. Value copies over to SpawnPoints in OnValidate
@@ -58,6 +60,7 @@ namespace Photon.Pun.UtilityScripts
         // Record of spawned objects, used for Despawn All
         public Stack<GameObject> SpawnedObjects = new Stack<GameObject>();
         protected int spawnedAsActorId;
+
 
 
 
@@ -135,12 +138,7 @@ namespace Photon.Pun.UtilityScripts
 					return unvalidated;
 
 				var prefabStatus = PrefabUtility.GetPrefabInstanceStatus(unvalidated);
-
-                #if UNITY_2021_3_OR_NEWER
-                var isValidPrefab = prefabStatus != PrefabInstanceStatus.NotAPrefab;
-                #else
 				var isValidPrefab = prefabStatus == PrefabInstanceStatus.Connected || prefabStatus == PrefabInstanceStatus.Disconnected;
-                #endif
 
 				if (isValidPrefab)
 					validated = PrefabUtility.GetCorrespondingObjectFromSource(unvalidated) as GameObject;
@@ -173,13 +171,37 @@ namespace Photon.Pun.UtilityScripts
         }
 
 
-        public virtual void OnJoinedRoom()
+        public virtual void OnJoinedRoom()//change to start
         {
-            // Only AutoSpawn if we are a new ActorId. Rejoining should reproduce the objects by server instantiation.
-            if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined)
-            {
-                SpawnObjects();
+            if(DebugRoom){
+                if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined){
+                    SpawnObjects();
+                }
             }
+            else{
+                if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined && !PhotonNetwork.IsMasterClient){
+                    SpawnObjects();
+                }
+            }
+            // Only AutoSpawn if we are a new ActorId. Rejoining should reproduce the objects by server instantiation.
+        }
+        public void Start()
+        {
+            if (DebugRoom)
+            {
+                if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined)
+                {
+                    SpawnObjects();
+                }
+            }
+            else
+            {
+                if (AutoSpawnObjects && !PhotonNetwork.LocalPlayer.HasRejoined && !PhotonNetwork.IsMasterClient)
+                {
+                    SpawnObjects();
+                }
+            }
+            // Only AutoSpawn if we are a new ActorId. Rejoining should reproduce the objects by server instantiation.
         }
 
         public virtual void SpawnObjects()
@@ -195,7 +217,6 @@ namespace Photon.Pun.UtilityScripts
 #endif
                     Vector3 spawnPos; Quaternion spawnRot;
                     GetSpawnPoint(out spawnPos, out spawnRot);
-
 
                     var newobj = PhotonNetwork.Instantiate(o.name, spawnPos, spawnRot, 0);
                     SpawnedObjects.Push(newobj);
