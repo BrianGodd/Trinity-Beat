@@ -56,6 +56,19 @@ public class RhythmSessionController : MonoBehaviour
     {
         if (!_musicStarted || _rhythmStarted) return;
 
+        if (_musicStarted && _rhythmStarted)
+        {
+            // Guard: don't trigger before the scheduled music actually had a chance to play
+            if (AudioSettings.dspTime > _musicStartDsp + 0.1 && !musicSource.isPlaying)
+            {
+                beatClock.Stop();
+                comboRecorder.recordingEnabled = false;
+                comboRecorder.castingEnabled = false;
+
+                Debug.Log("[RhythmSession] Music ended -> rhythm stopped.");
+            }
+        }
+
         // Rhythm beat-0 time = music start + your typed offset
         double targetRhythmStart = _musicStartDsp + rhythmOffsetSec;
         double now = AudioSettings.dspTime;
