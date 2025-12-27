@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class TntEntity : MonoBehaviour
 {
-    private float effectRadius = 5f;
+    [SerializeField]
+    private float effectRadius = 10f;
     // Start is called before the first frame update
     void Start()
     {

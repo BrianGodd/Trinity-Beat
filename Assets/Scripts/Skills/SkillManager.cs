@@ -129,7 +129,7 @@ public class SkillManager : MonoBehaviour
     }
     private void ActionRun()
     {
-        
+        // increase speed in PlayerController
     }
 
     private void ActionRng()
@@ -139,12 +139,13 @@ public class SkillManager : MonoBehaviour
 
     private void ActionFly()
     {
+        // increase jumpForce in PlayerController
         
     }
 
     private void ActionFix()
     {
-        
+        // heal one hp
     }
 
     private void ActionHot()

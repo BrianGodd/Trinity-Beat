@@ -7,6 +7,7 @@ public class DogEntity : SummonedEntity
 {
     Transform closestPlayer;
     NavMeshAgent agent;
+    Animator animator;
     bool isMoving = false;
     // Update is called once per frame
     public override void Start()
@@ -14,7 +15,8 @@ public class DogEntity : SummonedEntity
         base.Start();
         agent = GetComponent<NavMeshAgent>();
         closestPlayer = FindClosestPlayer();
-        // BeginMovement();
+        BeginMovement();
+        animator = GetComponent<Animator>();
     }
 
     Transform FindClosestPlayer()
@@ -38,7 +40,18 @@ public class DogEntity : SummonedEntity
     void Update()
     {
         if (!isMoving || closestPlayer == null) return;
-        agent.SetDestination(closestPlayer.position);
+        Vector3 dist = closestPlayer.position - transform.position;
+        dist.y = 0;
+        if(dist.magnitude < 1f)
+        {
+            animator.SetBool("isWalking", false);
+        }
+        else
+        {
+            agent.SetDestination(closestPlayer.position);
+            animator.SetBool("isWalking", true);
+
+        }
     }
     
 
