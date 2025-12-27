@@ -531,7 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0df912f884b79f342982aa82f5b775b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pvCache: {fileID: 0}
   Room: {fileID: 107176574}
   ButtonName: {fileID: 1762072539}
   RoomName: {fileID: 1654817412}
