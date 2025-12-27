@@ -59745,7 +59745,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1059190519}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16c6d0a1275c5bc4989d9d56cb4509fb, type: 3}
+  m_Script: {fileID: 11500000, guid: f51bcf85fd360994a8b576db322d4f32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   beatClock: {fileID: 1059190526}
@@ -59758,7 +59758,7 @@ MonoBehaviour:
   defaultColor: {r: 1, g: 1, b: 1, a: 0.35}
   hitColor: {r: 0.2, g: 1, b: 0.2, a: 0.9}
   missColor: {r: 1, g: 0.2, b: 0.2, a: 0.9}
-  cueColor: {r: 0.91180307, g: 1, b: 0.19999999, a: 0.5137255}
+  cueColor: {r: 1, g: 0.9664602, b: 0.19999999, a: 0.34509805}
   showExpectedCuePulse: 1
   cuePulseDuration: 0.12
   cuePulseScale: 1.25
