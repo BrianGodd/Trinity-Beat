@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Move(moveInput);
-        ApplyDrag();
+        if (IsGrounded()) ApplyDrag();
         ClampVelocity();
         RotateTowardsMovement();
     }
@@ -107,13 +107,14 @@ public class PlayerController : MonoBehaviour
         Vector3 vel = rb.velocity;
         vel.y = 0f;
 
-        if (vel.sqrMagnitude < 0.0001f) 
+        if (rb.velocity.sqrMagnitude < 0.0001f) 
         {
             rb.angularVelocity = Vector3.zero;
             rb.velocity = new Vector3(0f, 0f, 0f);
             return;
         }
 
+        if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f && vel.sqrMagnitude < 0.0001f) return;
         Quaternion targetRot = Quaternion.LookRotation(vel.normalized);
         rb.MoveRotation(targetRot);
     }
