@@ -6428,6 +6428,11 @@ MonoBehaviour:
   moveForce: 30
   maxSpeed: 5
   groundDrag: 3
+  jumpForce: 6
+  groundCheckDistance: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &8807385685768312062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6441,7 +6446,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UISurface: {fileID: 4068206923874515137}
-  bindingMap: {fileID: 0}
+  actionText: {fileID: 0}
+  comboCaster: {fileID: 0}
+  beatClock: {fileID: 0}
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,8 +9,8 @@ public class PlayerAction : MonoBehaviour
     public GameObject UISurface;
     public TextMeshProUGUI actionText;
 
-    ComboCaster comboCaster;
-    BeatClock beatClock;
+    public ComboCaster comboCaster;
+    public BeatClock beatClock;
     PhotonView pv;
     PlayerController playerController;
 
