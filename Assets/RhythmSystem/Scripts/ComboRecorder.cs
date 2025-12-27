@@ -34,6 +34,7 @@ public class ComboRecorder : MonoBehaviour
     public bool logInputs = true;
     public bool logMisses = true;
     public bool logIgnoredExtraInputs = false;
+    
 
     [Serializable]
     public struct Hit
@@ -93,8 +94,11 @@ public class ComboRecorder : MonoBehaviour
 
     private void HandleBeat(int beatInCycle, int cycleIndex, double beatStartTime)
     {
+        double relBeatStart = beatStartTime - beatClock.StartTime;
+        //if (logBeats)
+          //  Debug.Log($"[Beat] cycle={cycleIndex} beat={beatInCycle} beatStart={beatStartTime:F6}");
         if (logBeats)
-            Debug.Log($"[Beat] cycle={cycleIndex} beat={beatInCycle} beatStart={beatStartTime:F6}");
+            Debug.Log($"[Beat] cycle={cycleIndex} beat={beatInCycle} beatStartRel={(beatStartTime - beatClock.StartTime):F3}s");
 
         if (beatInCycle == 0)
             EnsureCombo(cycleIndex);
