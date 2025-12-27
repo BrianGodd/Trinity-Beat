@@ -11,12 +11,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float maxSpeed = 5f;
     [SerializeField] float groundDrag = 3f;
 
+    // jump
+    [SerializeField] float jumpForce = 6f;
+    [SerializeField] float groundCheckDistance = 0.2f;
+    [SerializeField] LayerMask groundMask = ~0;
+
     Rigidbody rb;
     PhotonView pv;
     Animator animator;
     CinemachineVirtualCamera vcam;
 
-    public GameObject UISurface;
+    // current move input (set by PlayerAction when BeatActionType.Move starts)
+    Vector3 moveInput = Vector3.zero;
+
+    // set when SetMoveInput receives a jump (worldDirection.y == 1)
+    bool jumpRequested = false;
 
     void Start()
     {
@@ -41,9 +50,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine) return;
 
-        Vector3 input = GetWASDInput();
-
-        if(input.magnitude > 0f)
+        // use moveInput set by PlayerAction instead of WASD
+        if (moveInput.sqrMagnitude > 0f)
         {
             animator.SetBool("walking", true);
         }
@@ -51,34 +59,33 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("walking", false);
         }
-        
-        UISurface.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        Move(input);
+        // handle jump request once
+        if (jumpRequested)
+        {
+            if (IsGrounded())
+            {
+                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                if (animator != null) animator.SetTrigger("jump");
+            }
+            jumpRequested = false;
+        }
+
+        Move(moveInput);
         ApplyDrag();
         ClampVelocity();
         RotateTowardsMovement();
     }
 
-    void LateUpdate()
+    // called by PlayerAction to provide movement direction (world-space)
+    public void SetMoveInput(Vector3 worldDirection)
     {
-        if (!pv.IsMine) return;
+        // interpret worldDirection.y == 1 as jump input
+        if (worldDirection.y > 0.5f)
+            jumpRequested = true;
 
-        UISurface.transform.rotation = Quaternion.identity;
-    }
-
-    Vector3 GetWASDInput()
-    {
-        float x = 0f;
-        float z = 0f;
-
-        if (Input.GetKey(KeyCode.W)) z += 1f;
-        if (Input.GetKey(KeyCode.S)) z -= 1f;
-        if (Input.GetKey(KeyCode.A)) x -= 1f;
-        if (Input.GetKey(KeyCode.D)) x += 1f;
-
-        Vector3 dir = new Vector3(x, 0f, z);
-        return dir.normalized;
+        // only use horizontal components for continuous movement
+        moveInput = new Vector3(worldDirection.x, 0f, worldDirection.z);
     }
 
     void Move(Vector3 direction)
@@ -89,12 +96,23 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(force, ForceMode.Force);
     }
 
+    bool IsGrounded()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.1f;
+        return Physics.Raycast(origin, Vector3.down, groundCheckDistance + 0.1f, groundMask);
+    }
+
     void RotateTowardsMovement()
     {
         Vector3 vel = rb.velocity;
         vel.y = 0f;
 
-        if (vel.sqrMagnitude < 0.1f) return;
+        if (vel.sqrMagnitude < 0.0001f) 
+        {
+            rb.angularVelocity = Vector3.zero;
+            rb.velocity = new Vector3(0f, 0f, 0f);
+            return;
+        }
 
         Quaternion targetRot = Quaternion.LookRotation(vel.normalized);
         rb.MoveRotation(targetRot);
