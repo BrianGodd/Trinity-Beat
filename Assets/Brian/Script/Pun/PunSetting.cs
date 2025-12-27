@@ -10,19 +10,18 @@ public class PunSetting : MonoBehaviourPunCallbacks
 {
     //public SoundManager SM;
     //public Animator FadeAnim;
-    public TextMeshProUGUI Room, ButtonName;
+    public TextMeshProUGUI PlayerNum, ButtonName;
     public TMP_InputField RoomName;
-    public string roomName = "";
     public bool isDebugRoom = false;
     // Start is called before the first frame update
     void Start()
     {
-        JoinLobby();
+        //JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        Debug.LogError("❌ Photon 斷線！原因：" + cause.ToString());
+        Debug.LogWarning("❌ Photon 斷線！原因：" + cause.ToString());
     }
 
     public override void OnConnectedToMaster()
@@ -41,17 +40,22 @@ public class PunSetting : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
         RoomOptions roomOptions = new RoomOptions
         {
-            MaxPlayers = 4,
+            MaxPlayers = 12,
             IsVisible = true,
             IsOpen = true
         };
-        PhotonNetwork.JoinOrCreateRoom(roomName, roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(RoomName.text, roomOptions, TypedLobby.Default);
+    }
+
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.Disconnect();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Room.text = "Room: " + roomName;
+        if(PhotonNetwork.InRoom) PlayerNum.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers;
     }
 
     public void JoinLobby()
@@ -73,26 +77,11 @@ public class PunSetting : MonoBehaviourPunCallbacks
         ButtonName.text = result.ToString() + ", " + (Application.internetReachability).ToString();
     }
 
-    public void CreateRoom()
-    {
-        if(!string.IsNullOrEmpty(RoomName.text))
-        {
-            PhotonNetwork.CreateRoom(RoomName.text);
-        }
-    }
-
-    public void JoinRoom()
-    {
-        if(!string.IsNullOrEmpty(RoomName.text))
-        {
-            PhotonNetwork.JoinRoom(RoomName.text);
-        }
-    }
-
     public void LeaveRoom()
     {
+        // photon disconnect from room
         PhotonNetwork.LeaveRoom();
-        roomName = "";
+        RoomName.text = "";
     }
 
     public void StartGame()
@@ -107,8 +96,7 @@ public class PunSetting : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        roomName = PhotonNetwork.CurrentRoom.Name;
-        Debug.Log("Join to Room, Room name: " + roomName);
+        Debug.Log("Join to Room, Room name: " + PhotonNetwork.CurrentRoom.Name);
     }
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
