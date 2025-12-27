@@ -9,7 +9,7 @@ public class OwlEntity : SummonedEntity
     // Start is called before the first frame update
     void Start()
     {
-        player = transform; // get user transform?
+        player = transform; // TODO: get user transform?
         offset = transform.position - player.position;
     }
 

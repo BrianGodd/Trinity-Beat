@@ -17,6 +17,5 @@ public class TntEntity : MonoBehaviour
             Vector3 force = (effectRadius - dir.magnitude) * dir.normalized;
             // player.GetComponent<Rigidbody>().AddForce(force);
         }
-        // RPC_Visualize()
     }
 }

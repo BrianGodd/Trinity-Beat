@@ -12,12 +12,17 @@ public class WeaponEffect : MonoBehaviour
         Wet,
         Tox
     }
+
     [SerializeField]
     private EnhancementEffect enhancementEffect = EnhancementEffect.None;
     [SerializeField]
     private Transform startPoint;
     [SerializeField]
     private GameObject attackObject;
+
+    public CatEntity catEntity = null;
+
+
     public int effectLifeCycle = 0;
     public int AOELifeCycle = 0;
     public int AimLifeCycle= 0;
@@ -47,6 +52,8 @@ public class WeaponEffect : MonoBehaviour
     {
         AimLifeCycle += offset;
         RNGLifeCycle += offset;
+        effectLifeCycle += offset;
+        AOELifeCycle += offset;
     }
 
     public void SetEnhancementEffect(EnhancementEffect newEnhancementEffect)
@@ -57,6 +64,8 @@ public class WeaponEffect : MonoBehaviour
 
     public void Attack(Vector3 dir, Vector3 delta, float length)
     {
+        delta += catEntity? (catEntity.transform.position - transform.position).normalized :Vector3.zero;
+        delta.Normalize();
         delta *= (AimLifeCycle > 0?0.5f:1f) * (RNGLifeCycle > 0?2f:1f);
         dir += delta;
         dir.Normalize();
@@ -66,6 +75,11 @@ public class WeaponEffect : MonoBehaviour
             newAttackObject.transform.localScale *= 2f;
         }
         newAttackObject.GetComponent<EnergyBall>()?.Init(dir, length, enhancementEffect);
+    }
+
+    public float GetCurrentCatDistane()
+    {
+        return catEntity? Vector3.Distance(catEntity.gameObject.transform.position, transform.position):0;
     }
 
 }

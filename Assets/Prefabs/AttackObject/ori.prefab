@@ -4957,7 +4957,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.44705883}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.23353481, g: 1, b: 0, a: 0.27450982}
@@ -9728,7 +9728,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 1, g: 1, b: 1, a: 0.42745098}
       maxGradient:
         serializedVersion: 2
         key0: {r: 0.9811321, g: 0.6591732, b: 0.19900322, a: 0.27450982}
@@ -19115,8 +19115,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090fb4ca3fecd5d4ca19a5e94938e2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  existTime: 0.5
+  existTime: 5
   visualEffect: {fileID: 1295063881667471480}
+  particleSystems:
+  - {fileID: 6853134537045082927}
+  - {fileID: 2696715533149129009}
+  - {fileID: 1318037561005233330}
+  - {fileID: 5866301670163358766}
   timer: 0
 --- !u!135 &1630190188556862197
 SphereCollider:

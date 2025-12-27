@@ -22,9 +22,7 @@ public class SummonedEntity : MonoBehaviour
         lifeCycle = cycle;
         if (lifeCycle == 0)
         {
-            Destroy(gameObject);
-            SkillManager.Instance.RemoveFromEntitiesList(this);
-            Debug.Log("Runner.Despawn(Object);");
+            DestroyEffect();
         }
     }
     public void AddLifeCycle(int offset)
@@ -32,9 +30,15 @@ public class SummonedEntity : MonoBehaviour
         lifeCycle += offset;
         if (lifeCycle == 0)
         {
-            Destroy(gameObject);
-            SkillManager.Instance.RemoveFromEntitiesList(this);
-            Debug.Log("Runner.Despawn(Object);");
+            DestroyEffect();
         }
+    }
+
+    protected virtual void DestroyEffect()
+    {
+        SkillManager.Instance.RemoveFromEntitiesList(this);
+        Debug.Log("Runner.Despawn(Object);");
+        Destroy(gameObject);
+        
     }
 }

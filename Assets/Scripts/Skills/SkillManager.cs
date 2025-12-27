@@ -12,6 +12,7 @@ public class EntityPrefabEntry
 public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
+    private Transform player;
     [SerializeField]
     private List<EntityPrefabEntry> entityprefabEntries;
 
@@ -52,10 +53,10 @@ public class SkillManager : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
-        if(timer > 0.5f)
+        if(timer > 5f)
         {
             AfterCycle();
-            timer -= 0.5f;
+            timer -= 5f;
         }
     }
 
@@ -186,7 +187,7 @@ public class SkillManager : MonoBehaviour
         if (!prefabDict.TryGetValue(name, out var prefab))
         return;
 
-        Instantiate(prefab);
+        Instantiate(prefab, player.position + player.forward * 0.5f, player.rotation);
     }
 
 }
