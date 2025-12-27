@@ -5808,6 +5808,7 @@ GameObject:
   - component: {fileID: 6918091467306442721}
   - component: {fileID: 2721016236543980267}
   - component: {fileID: 5788373732357438401}
+  - component: {fileID: 7249394067688407847}
   m_Layer: 0
   m_Name: (Pun2) Player
   m_TagString: Untagged
@@ -5966,6 +5967,21 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 1
   m_UseLocal: 1
+--- !u!114 &7249394067688407847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 820aa3b4432083a4da1d1c17df82fa91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveForce: 30
+  maxSpeed: 5
+  groundDrag: 3
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
