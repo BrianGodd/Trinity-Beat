@@ -2,29 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TntEntity : SummonedEntity
+public class TntEntity : MonoBehaviour
 {
     private float effectRadius = 5f;
     // Start is called before the first frame update
     void Start()
     {
         // in Spawned
-        Vector3 explosionPos = transform.position;
-
-        int playerLayerMask = 1 << LayerMask.NameToLayer("PlayerRig");
-
-        Collider[] colliders = Physics.OverlapSphere(explosionPos, effectRadius, playerLayerMask);
-
-        foreach (Collider hit in colliders)
-        {
-            // 爆炸邏輯
-            
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         
+        Transform player = transform; //TODO: Get player transform
+        if(Vector3.Distance(player.position, transform.position) < effectRadius)
+        {
+            Vector3 dir = player.position - transform.position;
+            Vector3 force = (effectRadius - dir.magnitude) * dir.normalized;
+            // player.GetComponent<Rigidbody>().AddForce(force);
+        }
+        // RPC_Visualize()
     }
 }

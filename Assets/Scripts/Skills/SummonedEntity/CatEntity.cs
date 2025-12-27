@@ -4,15 +4,9 @@ using UnityEngine;
 
 public class CatEntity : SummonedEntity
 {
-    // Start is called before the first frame update
-    void Start()
+    void OnTriggerEnter(Collider other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // 處理視野
+        Debug.Log("Compare this cat and the cat that affect user now, if this cat has shoerter distance, replacce it");
     }
 }

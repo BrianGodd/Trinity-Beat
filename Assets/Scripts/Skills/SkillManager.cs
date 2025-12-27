@@ -2,26 +2,85 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class EntityPrefabEntry
+{
+    public string key;
+    public GameObject prefab;
+}
+
 public class SkillManager : MonoBehaviour
 {
+    public enum EnhancementEffect
+    {
+        Hot,
+        Ice,
+        Wet,
+        Tox
+    }
     public static SkillManager Instance;
+    [SerializeField]
+    private List<EntityPrefabEntry> entityprefabEntries;
+
+    [SerializeField]
+    private Dictionary<string, GameObject> prefabDict;
+
+
+    [SerializeField]
+    private List<SummonedEntity> summonedEntities;
+
+    
+
+
+
+
+    // test parameter
+    public float timer = 0f;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        if(Instance == null)
-        {
-            Instance = this;
-        }
-        else
+        if(Instance != null)
         {
             Destroy(this);
+            return;
         }
+        Instance = this;
+        prefabDict = new Dictionary<string, GameObject>();
+        foreach (var entry in entityprefabEntries)
+        {
+            if (!prefabDict.ContainsKey(entry.key))
+                prefabDict.Add(entry.key, entry.prefab);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        timer += Time.deltaTime;
+        if(timer > 0.5f)
+        {
+            EntitiesCycle();
+            timer -= 0.5f;
+        }
+    }
+
+    public void AddIntoEntitiesList(SummonedEntity summonedEntity)
+    {
+        summonedEntities.Add(summonedEntity);
+    }
+    public void RemoveFromEntitiesList(SummonedEntity summonedEntity)
+    {
+        summonedEntities.Remove(summonedEntity);
+    }
+    public void EntitiesCycle()
+    {
+        for (int i = summonedEntities.Count - 1; i >= 0; i--)
+        {
+            summonedEntities[i]?.AddLifeCycle(-1);
+        }
     }
     public bool SkillDetection(string input)
     {
@@ -62,102 +121,78 @@ public class SkillManager : MonoBehaviour
                 ActionTox();
                 break;
             case "cat":
-                ActionCat();
-                break;
             case "fog":
-                ActionFog();
-                break;
             case "dog":
-                ActionDog();
-                break;
             case "owl":
-                ActionOwl();
-                break;
             case "tnt":
-                ActionTnt();
+                ActionSummon(input);
                 break;
             default:
                 return false;
         }
         return true;
     }
-    public void ActionRun()
+    private void ActionRun()
     {
         
     }
 
-    public void ActionRng()
+    private void ActionRng()
     {
         
     }
 
-    public void ActionFly()
+    private void ActionFly()
     {
         
     }
 
-    public void ActionFix()
+    private void ActionFix()
     {
         
     }
 
-    public void ActionHot()
+    private void ActionHot()
     {
         
     }
 
-    public void ActionCut()
+    private void ActionCut()
     {
         
     }
 
-    public void ActionAim()
+    private void ActionAim()
     {
         
     }
 
-    public void ActionAoe()
+    private void ActionAoe()
     {
         
     }
 
-    public void ActionIce()
+    private void ActionIce()
     {
         
     }
 
-    public void ActionWet()
+    private void ActionWet()
     {
         
     }
 
-    public void ActionTox()
+    private void ActionTox()
     {
         
     }
 
-    public void ActionCat()
+    private void ActionSummon(string name)
     {
-        
+        if (!prefabDict.TryGetValue(name, out var prefab))
+        return;
+
+        Instantiate(prefab);
     }
 
-    public void ActionFog()
-    {
-        
-    }
-
-    public void ActionDog()
-    {
-        
-    }
-
-    public void ActionOwl()
-    {
-        
-    }
-
-    public void ActionTnt()
-    {
-        
-    }
 }
