@@ -11,13 +11,6 @@ public class EntityPrefabEntry
 
 public class SkillManager : MonoBehaviour
 {
-    public enum EnhancementEffect
-    {
-        Hot,
-        Ice,
-        Wet,
-        Tox
-    }
     public static SkillManager Instance;
     [SerializeField]
     private List<EntityPrefabEntry> entityprefabEntries;
@@ -29,9 +22,8 @@ public class SkillManager : MonoBehaviour
     [SerializeField]
     private List<SummonedEntity> summonedEntities;
 
-    
-
-
+    [SerializeField]
+    private WeaponEffect weaponEffect;
 
 
     // test parameter
@@ -62,7 +54,7 @@ public class SkillManager : MonoBehaviour
         timer += Time.deltaTime;
         if(timer > 0.5f)
         {
-            EntitiesCycle();
+            AfterCycle();
             timer -= 0.5f;
         }
     }
@@ -75,12 +67,13 @@ public class SkillManager : MonoBehaviour
     {
         summonedEntities.Remove(summonedEntity);
     }
-    public void EntitiesCycle()
+    public void AfterCycle()
     {
         for (int i = summonedEntities.Count - 1; i >= 0; i--)
         {
             summonedEntities[i]?.AddLifeCycle(-1);
         }
+        weaponEffect.AddLifeCycle(-1);
     }
     public bool SkillDetection(string input)
     {
@@ -139,7 +132,7 @@ public class SkillManager : MonoBehaviour
 
     private void ActionRng()
     {
-        
+        weaponEffect.RNGLifeCycle = 3;
     }
 
     private void ActionFly()
@@ -154,7 +147,7 @@ public class SkillManager : MonoBehaviour
 
     private void ActionHot()
     {
-        
+        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
     }
 
     private void ActionCut()
@@ -164,26 +157,27 @@ public class SkillManager : MonoBehaviour
 
     private void ActionAim()
     {
-        
+        weaponEffect.AimLifeCycle = 3;
     }
 
     private void ActionAoe()
     {
-        
+        weaponEffect.AOELifeCycle = 3;
     }
 
     private void ActionIce()
     {
-        
+        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Ice);
     }
 
     private void ActionWet()
     {
-        
+        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Wet);
     }
 
     private void ActionTox()
     {
+        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
         
     }
 
