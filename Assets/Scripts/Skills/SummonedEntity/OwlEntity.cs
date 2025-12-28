@@ -16,7 +16,7 @@ public class OwlEntity : SummonedEntity
     }
     Transform FindMyPlayerTransform()
     {
-        PlayerController[] players = FindObjectsOfType<PlayerController>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         for (int i = 0; i < players.Length; i++)
         {

@@ -25,12 +25,12 @@ public class DogEntity : SummonedEntity
 
     Transform FindClosestPlayer()
     {
-        PlayerController[] players = FindObjectsOfType<PlayerController>();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
 
         Transform closest = null;
         float minDist = float.MaxValue;
 
-        foreach (PlayerController p in players)
+        foreach (var p in players)
         {
             PhotonView pv = p.GetComponent<PhotonView>();
             if (pv == null || pv.IsMine) continue;
