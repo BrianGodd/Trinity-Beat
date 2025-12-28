@@ -15,6 +15,7 @@ public class PlayerAction : MonoBehaviour
 
     public ComboCaster comboCaster;
     public BeatClock beatClock;
+    public SkillManager skillManager;
     PhotonView pv;
     PlayerController playerController;
 
@@ -32,6 +33,7 @@ public class PlayerAction : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
+        skillManager = FindObjectOfType<SkillManager>();
 
         if (comboCaster != null && comboCaster.comboRecorder != null)
         {
@@ -68,7 +70,8 @@ public class PlayerAction : MonoBehaviour
 
         LastCombo = combo;
 
-        StartCoroutine(PerformActionCoroutine(combo.hits));
+        if(!skillManager.SkillDetection(combo.WordString))
+            StartCoroutine(PerformActionCoroutine(combo.hits));
     }
 
     IEnumerator PerformActionCoroutine(ComboRecorder.Hit[] hits)
@@ -151,7 +154,18 @@ public class PlayerAction : MonoBehaviour
                 {
                     Vector3 spawnPos = transform.position + dirVec.normalized * 15.0f + Vector3.up * 1.0f;
                     Quaternion spawnRot = Quaternion.LookRotation(dirVec, Vector3.up);
-                    PhotonNetwork.Instantiate(magic.name, spawnPos, spawnRot);
+
+                    // pass owner viewID as instantiation data so all clients receive it
+                    object[] instData = new object[] { pv != null ? pv.ViewID : -1 };
+                    GameObject skillObj = PhotonNetwork.Instantiate(magic.name, spawnPos, spawnRot, 0, instData);
+
+                    // optional: set locally if needed immediately
+                    if (skillObj != null)
+                    {
+                        Skill skillComp = skillObj.GetComponent<Skill>();
+                        if (skillComp != null)
+                            skillComp.ownerViewID = (pv != null) ? pv.ViewID : -1;
+                    }
                 }
                 break;
 

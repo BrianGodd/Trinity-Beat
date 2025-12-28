@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+
 
 [System.Serializable]
 public class EntityPrefabEntry
@@ -12,6 +14,8 @@ public class EntityPrefabEntry
 public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
+
+    private Transform player;
     [SerializeField]
     private List<EntityPrefabEntry> entityprefabEntries;
 
@@ -23,7 +27,10 @@ public class SkillManager : MonoBehaviour
     private List<SummonedEntity> summonedEntities;
 
     [SerializeField]
-    private WeaponEffect weaponEffect;
+    public WeaponEffect weaponEffect;
+
+    [SerializeField]
+    public PlayerLife playerLife;
 
 
     // test parameter
@@ -45,17 +52,40 @@ public class SkillManager : MonoBehaviour
             if (!prefabDict.ContainsKey(entry.key))
                 prefabDict.Add(entry.key, entry.prefab);
         }
+        
+        // TODO: get user transform?
+        player = FindMyPlayerTransform();
+        
+    }
 
+    Transform FindMyPlayerTransform()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            PhotonView pv = players[i].GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                return players[i].transform;
+            }
+        }
+
+        return null;
     }
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(timer > 0.5f)
+        // timer += Time.deltaTime;
+        // if(timer > 5f)
+        // {
+        //     AfterCycle();
+        //     timer -= 5f;
+        // }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            AfterCycle();
-            timer -= 0.5f;
+            SkillDetection("tnt");
         }
     }
 
@@ -73,7 +103,7 @@ public class SkillManager : MonoBehaviour
         {
             summonedEntities[i]?.AddLifeCycle(-1);
         }
-        weaponEffect.AddLifeCycle(-1);
+        weaponEffect?.AddLifeCycle(-1);
     }
     public bool SkillDetection(string input)
     {
@@ -95,9 +125,9 @@ public class SkillManager : MonoBehaviour
             case "hot":
                 ActionHot();
                 break;
-            case "cut":
-                ActionCut();
-                break;
+            // case "cut":
+            //     ActionCut();
+            //     break;
             case "aim":
                 ActionAim();
                 break;
@@ -107,9 +137,9 @@ public class SkillManager : MonoBehaviour
             case "ice":
                 ActionIce();
                 break;
-            case "wet":
-                ActionWet();
-                break;
+            // case "wet":
+            //     ActionWet();
+            //     break;
             case "tox":
                 ActionTox();
                 break;
@@ -127,7 +157,7 @@ public class SkillManager : MonoBehaviour
     }
     private void ActionRun()
     {
-        
+        // increase speed in PlayerController
     }
 
     private void ActionRng()
@@ -137,17 +167,19 @@ public class SkillManager : MonoBehaviour
 
     private void ActionFly()
     {
+        // increase jumpForce in PlayerController
         
     }
 
     private void ActionFix()
     {
-        
+        // heal one hp
+        playerLife.RequestChangeLife(20);
     }
 
     private void ActionHot()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
     }
 
     private void ActionCut()
@@ -167,17 +199,17 @@ public class SkillManager : MonoBehaviour
 
     private void ActionIce()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Ice);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Ice);
     }
 
     private void ActionWet()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Wet);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Wet);
     }
 
     private void ActionTox()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
         
     }
 
@@ -186,7 +218,11 @@ public class SkillManager : MonoBehaviour
         if (!prefabDict.TryGetValue(name, out var prefab))
         return;
 
-        Instantiate(prefab);
+        PhotonNetwork.Instantiate(
+            prefab.name,
+            player.position + player.forward * 0.5f + ((name == "owl")?3f:0f )* Vector3.up,
+            player.rotation
+        );
     }
 
 }

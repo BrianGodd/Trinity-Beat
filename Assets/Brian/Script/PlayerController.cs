@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PhotonView))]
@@ -27,6 +28,9 @@ public class PlayerController : MonoBehaviour
     // set when SetMoveInput receives a jump (worldDirection.y == 1)
     bool jumpRequested = false;
 
+    public GameObject deathEffectPrefab;
+    public TextMeshProUGUI playerNameText;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,6 +46,7 @@ public class PlayerController : MonoBehaviour
             if (vcam != null)
             {
                 vcam.Follow = transform;
+                vcam.LookAt = transform;
             }
         }
     }
@@ -49,6 +54,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+
+        playerNameText.text = PhotonNetwork.NickName;
 
         // use moveInput set by PlayerAction instead of WASD
         if (moveInput.sqrMagnitude > 0f)
@@ -72,7 +79,7 @@ public class PlayerController : MonoBehaviour
         }
 
         Move(moveInput);
-        ApplyDrag();
+        if (IsGrounded()) ApplyDrag();
         ClampVelocity();
         RotateTowardsMovement();
     }
@@ -107,13 +114,14 @@ public class PlayerController : MonoBehaviour
         Vector3 vel = rb.velocity;
         vel.y = 0f;
 
-        if (vel.sqrMagnitude < 0.0001f) 
+        if (rb.velocity.sqrMagnitude < 0.0001f) 
         {
             rb.angularVelocity = Vector3.zero;
             rb.velocity = new Vector3(0f, 0f, 0f);
             return;
         }
 
+        if (rb.velocity.y > -0.1f && rb.velocity.y < 0.1f && vel.sqrMagnitude < 0.0001f) return;
         Quaternion targetRot = Quaternion.LookRotation(vel.normalized);
         rb.MoveRotation(targetRot);
     }
@@ -137,5 +145,15 @@ public class PlayerController : MonoBehaviour
             horizontal = horizontal.normalized * maxSpeed;
             rb.velocity = new Vector3(horizontal.x, v.y, horizontal.z);
         }
+    }
+
+    public void PlayerDeath(GameObject killer)
+    {
+        vcam.Follow = killer.transform;
+        vcam.LookAt = killer.transform;
+        GetComponent<PlayerAction>().enabled = false;
+        GetComponent<PlayerLife>().enabled = false;
+        GetComponent<PlayerController>().enabled = false;
+        GameObject.Find("GameManager").GetComponent<BattleMaster>().ShowDeadUI();
     }
 }

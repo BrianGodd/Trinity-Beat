@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnergyBall : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class EnergyBall : MonoBehaviour
     public Transform visualEffect;
     private Vector3 originalPosition;
     private WeaponEffect.EnhancementEffect enhancementEffect;
+    [SerializeField]
+    private List<ParticleSystem> particleSystems;
 
     // test parameter
     public float timer = 0f;
@@ -39,11 +42,66 @@ public class EnergyBall : MonoBehaviour
         direction = dir;
         length = l;
         enhancementEffect = ee;
+        Color color = new Color(1f, 1f, 1f);
+        switch (ee)
+        {
+            case WeaponEffect.EnhancementEffect.Hot:
+                color = new Color(1f, 0.4f, 0.5f);
+                break;
+            case WeaponEffect.EnhancementEffect.Ice:
+                color = new Color(0.8f, 0.8f, 1f);
+                break;
+            case WeaponEffect.EnhancementEffect.Tox:
+                color = new Color(0.65f, 0.3f, 0.7f);
+                break;
+            case WeaponEffect.EnhancementEffect.Wet:
+                color = new Color(0.7f, 0.6f, 1f);
+                break;
+            default:
+                break;
+        }
+        for (int i = 0; i < particleSystems.Count; i++)
+        {
+            var ps = particleSystems[i];
+            if (ps == null)
+                continue;
+
+            var main = ps.main;
+            main.startColor = color;
+        }
     }
     void OnTriggerEnter(Collider other)
     {
+        PlayerLife playerLife = other.GetComponent<PlayerLife>();
+        if(playerLife == null || playerLife.gameObject.GetComponent<PhotonView>().IsMine)
+        {
+            // playerLife.pv.IsMine
+            return;
+        }
         // 處理被攻擊
         Debug.Log("Attack by " + enhancementEffect);
+        float damage = -20f;
+        switch (enhancementEffect)
+        {
+            case WeaponEffect.EnhancementEffect.Hot:
+                damage *= 2f;
+                break;
+            case WeaponEffect.EnhancementEffect.Ice:
+                // other.GetComponent<Locomotion>().speed decrease
+                break;
+            case WeaponEffect.EnhancementEffect.Tox:
+                // other.GetComponent<HPSystem>().isToxic = true;
+                break;
+            case WeaponEffect.EnhancementEffect.Wet:
+
+                break;
+            default:
+                break;
+
+        }
+        playerLife.RequestChangeLife((int)damage);
+        // other.GetComponent<HPSystem>().TakeDamage(damage);
+
     }
 
     // void OnTriggerExit(Collider other)

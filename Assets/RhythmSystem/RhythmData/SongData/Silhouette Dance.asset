@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e5e1303db0cc94b9af622b0147c17d, type: 3}
+  m_Name: Silhouette Dance
+  m_EditorClassIdentifier: 
+  title: Silhouette Dance
+  albumCover: {fileID: 2800000, guid: 9db14fc1e30526d46be8e8c0a7936fb0, type: 3}
+  bgm: {fileID: 8300000, guid: b0242144d6ffaf94a853047837f1595e, type: 3}
+  loop: 1
+  bpm: 166
+  beat0OffsetSec: 1.55
+  timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
+  tutorialCycles: 0
