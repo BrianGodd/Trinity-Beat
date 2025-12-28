@@ -42,6 +42,7 @@ MonoBehaviour:
   - RpcTriggerEffect
   - RPC_SpawnFog
   - RPC_ChangeLife
+  - RPC_SetHiddenRemote
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

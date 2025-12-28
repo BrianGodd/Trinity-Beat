@@ -6233,6 +6233,8 @@ GameObject:
   - component: {fileID: 7249394067688407847}
   - component: {fileID: 8807385685768312062}
   - component: {fileID: 3807669882528388646}
+  - component: {fileID: 6371132045479817124}
+  - component: {fileID: 9169717908077471128}
   m_Layer: 0
   m_Name: (Pun2) Player
   m_TagString: Player
@@ -6480,6 +6482,46 @@ MonoBehaviour:
   damageCooldown: 0.8
   currentLife: 0
   slowMotionScale: 0.2
+--- !u!114 &6371132045479817124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52a3e39b40d55464c83c82e0b6f1dd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localAlphaInBush: 0.5
+  renderersToFade:
+  - {fileID: 2484697032109179351}
+  - {fileID: 8049571208791553535}
+  hideForOthers: 1
+--- !u!114 &9169717908077471128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c77dc8693ed274a871ee19b86a54e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localAlphaInBush: 0.358
+  fadeRenderers:
+  - {fileID: 2484697032109179351}
+  - {fileID: 8049571208791553535}
+  hideRenderers:
+  - {fileID: 2484697032109179351}
+  - {fileID: 8049571208791553535}
+  useBufferedRpc: 1
+  tweakLitForTransparency: 1
+  forcedMetallic: 0
+  forcedSmoothness: 0
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
