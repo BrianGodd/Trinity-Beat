@@ -154,7 +154,7 @@ public class SkillManager : MonoBehaviour
         {
             FindMyPlayerTransform();
         }
-        // playerController.maxSpeed = 7.5f;
+        playerController.ChangeVelocity(1.5f);
     }
 
     private void ActionRng()
@@ -169,7 +169,7 @@ public class SkillManager : MonoBehaviour
         {
             FindMyPlayerTransform();
         }
-        // playerController.jumpForce = 9f;
+        playerController.ChangeJumpForce(1.5f);
     }
 
     private void ActionFix()

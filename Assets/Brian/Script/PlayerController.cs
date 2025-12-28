@@ -156,4 +156,27 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerController>().enabled = false;
         GameObject.Find("GameManager").GetComponent<BattleMaster>().ShowDeadUI();
     }
+
+    public void ChangeVelocity(float mul)
+    {
+        moveForce *= mul;
+        maxSpeed *= mul;
+        if(moveForce > 60f)
+        {
+            moveForce = 60f;
+        }
+        if(maxSpeed > 10f)
+        {
+            maxSpeed = 10f;
+        }
+    }
+
+    public void ChangeJumpForce(float mul)
+    {
+        jumpForce *= mul;
+        if(jumpForce > 12f)
+        {
+            jumpForce = 12f;
+        }
+    }
 }
