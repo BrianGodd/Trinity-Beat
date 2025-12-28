@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             if (vcam != null)
             {
                 vcam.Follow = transform;
-                vcam.LookAt = transform;
+                //vcam.LookAt = transform;
             }
         }
     }
