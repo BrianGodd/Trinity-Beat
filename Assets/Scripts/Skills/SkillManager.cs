@@ -65,6 +65,9 @@ public class SkillManager : MonoBehaviour
             PhotonView pv = players[i].GetComponent<PhotonView>();
             if (pv != null && pv.IsMine)
             {
+                playerLife = players[i].GetComponent<PlayerLife>();
+                playerController = players[i].GetComponent<PlayerController>();
+
                 return players[i].transform;
             }
         }
@@ -143,9 +146,14 @@ public class SkillManager : MonoBehaviour
         }
         return true;
     }
+
     private void ActionRun()
     {
         // increase speed in PlayerController
+        if(playerController == null)
+        {
+            FindMyPlayerTransform();
+        }
         // playerController.maxSpeed = 7.5f;
     }
 
@@ -157,12 +165,20 @@ public class SkillManager : MonoBehaviour
     private void ActionFly()
     {
         // increase jumpForce in PlayerController
+        if(playerController == null)
+        {
+            FindMyPlayerTransform();
+        }
         // playerController.jumpForce = 9f;
     }
 
     private void ActionFix()
     {
         // heal one hp
+        if(playerLife == null)
+        {
+            FindMyPlayerTransform();
+        }
         playerLife.RequestChangeLife(20);
     }
 
