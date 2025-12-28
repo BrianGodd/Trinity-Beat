@@ -6231,6 +6231,7 @@ GameObject:
   - component: {fileID: 967676342098889695}
   - component: {fileID: 7249394067688407847}
   - component: {fileID: 8807385685768312062}
+  - component: {fileID: 3807669882528388646}
   m_Layer: 0
   m_Name: (Pun2) Player
   m_TagString: Untagged
@@ -6450,6 +6451,30 @@ MonoBehaviour:
   actionText: {fileID: 7519759162490677695}
   comboCaster: {fileID: 0}
   beatClock: {fileID: 0}
+--- !u!114 &3807669882528388646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c85268c69bfa685429f850b8bb94abb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxLife: 100
+  startLife: 100
+  hitEffectPrefab: {fileID: 0}
+  healEffectPrefab: {fileID: 0}
+  lifeSegments:
+  - {fileID: 4972959131142677969}
+  - {fileID: 4239853875282284353}
+  - {fileID: 323413122342866863}
+  - {fileID: 1264727997945921584}
+  - {fileID: 1666093111255147799}
+  currentLife: 0
+  isDebug: 1
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
@@ -12199,11 +12224,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 1
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 3
   m_Spacing: -1.97
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
