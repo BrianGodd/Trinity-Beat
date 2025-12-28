@@ -17,10 +17,17 @@ public class TypingSync : MonoBehaviour
     {
         char[] chars = textMeshPro.text.ToCharArray();
         chars[idx * 2] = c;
-        textMeshPro.text = new string(chars);
+        pv.RPC(nameof(RPC_ChangeWord), RpcTarget.All, new string(chars));
+
     }
     public void InitWord()
     {
-        textMeshPro.text = "_ _ _";
+        pv.RPC(nameof(RPC_ChangeWord), RpcTarget.All, "_ _ _");
+    }
+
+    [PunRPC]
+    void RPC_ChangeWord(string newText, PhotonMessageInfo info)
+    {
+        textMeshPro.text = newText;
     }
 }
