@@ -197,6 +197,7 @@ public class PlayerLife : MonoBehaviour
             if (dmgPv != null && pv != null && pv.Owner != null && dmgPv.Owner != null && dmgPv.Owner == pv.Owner)
                 return;
 
+            Debug.Log("PlayerLife: Triggered by Damage object.");
             RequestChangeLife(-20);
         }
     }

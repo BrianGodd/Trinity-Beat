@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7831276482321428810}
   - component: {fileID: 7370884772719825830}
   - component: {fileID: 8088020313310801203}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_groundflashbom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4920,7 +4920,7 @@ GameObject:
   - component: {fileID: 4490228678998060765}
   - component: {fileID: 1693979032382940497}
   - component: {fileID: 5742500551922581374}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_bomfog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9823,7 +9823,7 @@ GameObject:
   - component: {fileID: -4557115508939480105}
   - component: {fileID: 5741053913216352359}
   - component: {fileID: 3874885117577136949}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: pfb_eff_ice02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14676,6 +14676,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 3874885117577136949}
+  - {fileID: 8089287191062193756}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -14729,7 +14730,7 @@ GameObject:
   - component: {fileID: 6263559394043686971}
   - component: {fileID: 3640422509290937998}
   - component: {fileID: 3553525658000396283}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_ice01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19641,7 +19642,7 @@ GameObject:
   - component: {fileID: 5081939712757446031}
   - component: {fileID: 3807275174926266749}
   - component: {fileID: 8698722930789885759}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_groundwhite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24541,7 +24542,7 @@ GameObject:
   - component: {fileID: 3959073294473425400}
   - component: {fileID: 2519649049697447594}
   - component: {fileID: 4048931993958140413}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_crossline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29459,7 +29460,7 @@ GameObject:
   - component: {fileID: 4472819266399404570}
   - component: {fileID: 1395768739031333333}
   - component: {fileID: 5556414643723063366}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_lightbom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34368,7 +34369,7 @@ GameObject:
   - component: {fileID: 7457665826605477333}
   - component: {fileID: 7293480179697448400}
   - component: {fileID: 2829811133651979779}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_centerStar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39421,7 +39422,7 @@ GameObject:
   - component: {fileID: 296849984809178190}
   - component: {fileID: 4428205426484997275}
   - component: {fileID: 6777331753201338169}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_rock_glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44321,7 +44322,7 @@ GameObject:
   - component: {fileID: 3898125238088190578}
   - component: {fileID: 3316780362959382012}
   - component: {fileID: 3865473683827744713}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_icefog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49221,7 +49222,7 @@ GameObject:
   - component: {fileID: 9047137035286731747}
   - component: {fileID: 5295784776928860363}
   - component: {fileID: 5855523919732040435}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_ring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54121,7 +54122,7 @@ GameObject:
   - component: {fileID: 6477110541745131138}
   - component: {fileID: 945140844884592603}
   - component: {fileID: 81892395688210955}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_pointline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59111,7 +59112,7 @@ GameObject:
   - component: {fileID: 763961101543463709}
   - component: {fileID: 530453264582510161}
   - component: {fileID: 6788678211704290357}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: ps_groundlightbom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64022,7 +64023,7 @@ GameObject:
   - component: {fileID: 6488835569986011282}
   - component: {fileID: 1309142530243307855}
   - component: {fileID: 8089287191062193756}
-  m_Layer: 12
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -64039,7 +64040,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.16, z: -5.4}
-  m_LocalScale: {x: 1.18, y: -0.06, z: 1.18}
+  m_LocalScale: {x: 1.44, y: -0.06, z: 1.18}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6533522370435377103}
