@@ -67898,7 +67898,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1527995c8416db43b63522590a74be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIRect: {fileID: 0}
   dustPrefab: {fileID: 6840462660306790848, guid: fc620da69486aee4894e609dbcd470f6, type: 3}
+  CountDownPrefab: {fileID: 0}
   spawnPos:
   - {fileID: 1608770402}
   - {fileID: 358650496}
@@ -118611,6 +118613,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1519091172}
     m_Modifications:
+    - target: {fileID: -659238172305821687, guid: 23194034a7e55554d8355779cf15943e, type: 3}
+      propertyPath: sceneViewId
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 1470422449930111359, guid: 23194034a7e55554d8355779cf15943e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -37.74
@@ -118659,6 +118665,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Record_Daybreak Frontline
       objectReference: {fileID: 0}
+    - target: {fileID: 5068847279647699645, guid: 23194034a7e55554d8355779cf15943e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -118676,9 +118686,17 @@ PrefabInstance:
       propertyPath: songPlayer
       value: 
       objectReference: {fileID: 1059190528}
+    - target: {fileID: 3375863123105731967, guid: acfed757a31e9ad45b56da1f5ebc45a0, type: 3}
+      propertyPath: sceneViewId
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4218457597671790064, guid: acfed757a31e9ad45b56da1f5ebc45a0, type: 3}
       propertyPath: m_Name
       value: "Record_\u30AB\u30EF\u30AD\u30F2\u30A2\u30E1\u30AF"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4218457597671790064, guid: acfed757a31e9ad45b56da1f5ebc45a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7754040825238802546, guid: acfed757a31e9ad45b56da1f5ebc45a0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118733,6 +118751,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1519091172}
     m_Modifications:
+    - target: {fileID: -614330953737030510, guid: 29705d21643ee3e428f337ef12cfa116, type: 3}
+      propertyPath: sceneViewId
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4211124834410919152, guid: 29705d21643ee3e428f337ef12cfa116, type: 3}
       propertyPath: songPlayer
       value: 
@@ -118740,6 +118762,10 @@ PrefabInstance:
     - target: {fileID: 5248302333912053444, guid: 29705d21643ee3e428f337ef12cfa116, type: 3}
       propertyPath: m_Name
       value: Record_Monitoring
+      objectReference: {fileID: 0}
+    - target: {fileID: 5248302333912053444, guid: 29705d21643ee3e428f337ef12cfa116, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6466859410584939141, guid: 29705d21643ee3e428f337ef12cfa116, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118842,6 +118868,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Record_IRIS OUT
       objectReference: {fileID: 0}
+    - target: {fileID: 4884312003416029717, guid: 0bbc8fee89ed3784db8674849a5319ef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169230512649972509, guid: 0bbc8fee89ed3784db8674849a5319ef, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -118855,6 +118889,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1519091172}
     m_Modifications:
+    - target: {fileID: -607742325233701861, guid: 90cd512dbdfb0154aa27bbc1a1f5f40d, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3599451450142699755, guid: 90cd512dbdfb0154aa27bbc1a1f5f40d, type: 3}
       propertyPath: songPlayer
       value: 
@@ -118862,6 +118900,10 @@ PrefabInstance:
     - target: {fileID: 5679525446074611142, guid: 90cd512dbdfb0154aa27bbc1a1f5f40d, type: 3}
       propertyPath: m_Name
       value: Record_Telepathy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5679525446074611142, guid: 90cd512dbdfb0154aa27bbc1a1f5f40d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9213144633623436179, guid: 90cd512dbdfb0154aa27bbc1a1f5f40d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -118924,6 +118966,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: "Record_\u304A\u6C17\u306B\u53EC\u3059\u307E\u307E"
       objectReference: {fileID: 0}
+    - target: {fileID: 229811436998860727, guid: 868198cbf03d028408250953471befff, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4464282736237478997, guid: 868198cbf03d028408250953471befff, type: 3}
+      propertyPath: sceneViewId
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4744107080614499478, guid: 868198cbf03d028408250953471befff, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.2
@@ -118977,6 +119027,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1519091172}
     m_Modifications:
+    - target: {fileID: -334497055522444248, guid: 33e3e1f8002e79d4699727d35858cc21, type: 3}
+      propertyPath: sceneViewId
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6887215125342601551, guid: 33e3e1f8002e79d4699727d35858cc21, type: 3}
       propertyPath: songPlayer
       value: 
@@ -119024,6 +119078,10 @@ PrefabInstance:
     - target: {fileID: 8907917342783429918, guid: 33e3e1f8002e79d4699727d35858cc21, type: 3}
       propertyPath: m_Name
       value: Record_Help me, ERINNNNNN!!
+      objectReference: {fileID: 0}
+    - target: {fileID: 8907917342783429918, guid: 33e3e1f8002e79d4699727d35858cc21, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -119191,6 +119249,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Record_Bunny Girl
       objectReference: {fileID: 0}
+    - target: {fileID: 2147175963912923575, guid: a61316edc5239de478b6e003947c9b83, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5226565526801223709, guid: a61316edc5239de478b6e003947c9b83, type: 3}
+      propertyPath: sceneViewId
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 5445809944900885875, guid: a61316edc5239de478b6e003947c9b83, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22.28
@@ -119251,6 +119317,14 @@ PrefabInstance:
     - target: {fileID: 984346760440630808, guid: e97db427928aea64d935aa4312459e5a, type: 3}
       propertyPath: m_Name
       value: Record_Silhouette Dance
+      objectReference: {fileID: 0}
+    - target: {fileID: 984346760440630808, guid: e97db427928aea64d935aa4312459e5a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2193830530339883174, guid: e97db427928aea64d935aa4312459e5a, type: 3}
+      propertyPath: sceneViewId
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3860897074796689891, guid: e97db427928aea64d935aa4312459e5a, type: 3}
       propertyPath: m_LocalPosition.x

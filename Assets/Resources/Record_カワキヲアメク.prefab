@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7754040825238802546}
   - component: {fileID: 3430974014585531750}
   - component: {fileID: 1747511518823388365}
+  - component: {fileID: 3375863123105731967}
   m_Layer: 0
   m_Name: "Record_\u30AB\u30EF\u30AD\u30F2\u30A2\u30E1\u30AF"
   m_TagString: Untagged
@@ -73,6 +74,28 @@ MonoBehaviour:
   songPlayer: {fileID: 0}
   loadDelayAfterEnterSec: 0.2
   requiredTag: Player
+--- !u!114 &3375863123105731967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4218457597671790064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &9052938605238526269
 GameObject:
   m_ObjectHideFlags: 0
