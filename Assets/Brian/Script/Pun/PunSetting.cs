@@ -55,11 +55,11 @@ public class PunSetting : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        PhotonNetwork.NickName = PlayerName.text;
         if(PhotonNetwork.InRoom) 
         {
             PlayerNum.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers;
             //change network player name
-            PhotonNetwork.NickName = PlayerName.text;
         }
     }
 
