@@ -31,8 +31,6 @@ public class PlayerLife : MonoBehaviour
     
     public float slowMotionScale = 0.2f;
 
-    public bool isDebug = false;
-
     // timestamp of last time this player locally caused a damage RPC (used for cooldown)
     float lastDamageTime = -Mathf.Infinity;
 
@@ -49,23 +47,12 @@ public class PlayerLife : MonoBehaviour
 
     void Update()
     {
-        // debug/testing only: local input to damage/heal
-        if (pv != null && pv.IsMine && isDebug)
-        {
-            if (Input.GetKeyDown(KeyCode.H))
-            {
-                RequestChangeLife(-20); // take 20 damage
-            }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                RequestChangeLife(20); // heal 20
-            }
-        }
+
     }
 
     // Public API — call this to request a life change (damage/heal).
     // This will be sent as an RPC and applied on all clients.
-    public void RequestChangeLife(int amount)
+    public void RequestChangeLife(int amount, int attackerViewID = -1)
     {
         if (pv == null) pv = GetComponent<PhotonView>();
 
@@ -82,12 +69,12 @@ public class PlayerLife : MonoBehaviour
         }
 
         // send RPC to apply change on all clients
-        pv.RPC(nameof(RPC_ChangeLife), RpcTarget.All, amount);
+        pv.RPC(nameof(RPC_ChangeLife), RpcTarget.All, amount, attackerViewID);
     }
 
     // apply change on all clients
     [PunRPC]
-    void RPC_ChangeLife(int amount, PhotonMessageInfo info)
+    void RPC_ChangeLife(int amount, int attackerViewID, PhotonMessageInfo info)
     {
         int old = currentLife;
         currentLife = Mathf.Clamp(currentLife + amount, 0, maxLife);
@@ -107,7 +94,7 @@ public class PlayerLife : MonoBehaviour
         UpdateLifeSegments();
 
         if (currentLife <= 0 && old > 0)
-            HandleDeath(info.Sender);
+            HandleDeath(attackerViewID);
     }
 
     void PlayHitEffect(int damage)
@@ -168,28 +155,25 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
-    void HandleDeath(Photon.Realtime.Player killer)
+    void HandleDeath(int attackerViewID)
     {
-        // local reaction to death (run once per object when life hits zero)
-        if (animator != null) animator.SetTrigger("dead");
+        if (animator != null)
+            animator.SetTrigger("dead");
 
-        GameObject killerObj = null;
-        if (killer != null)
-        {
-            killerObj = FindPlayerObject(killer);
-            Debug.Log($"Killed by player: {killerObj.name}");
-        }
+        PhotonView skillPv = PhotonView.Find(attackerViewID);
+        GameObject skillObj = skillPv != null ? skillPv.gameObject : null;
 
-        // example: if this is local player's object, you might want to notify GameManager, respawn, etc.
-        if (pv != null && pv.IsMine)
+        // 再從招式推回玩家
+        Photon.Realtime.Player killerPlayer = skillPv != null ? skillPv.Owner : null;
+
+        Debug.Log(
+            $"Killed by skill: {skillObj?.name}, " +
+            $"Owner: {killerPlayer?.NickName}"
+        );
+
+        if (pv.IsMine)
         {
-            // TODO: insert local-player death handling (respawn, disable input, etc.)
-            Debug.Log($"You died. Killer: {(killer != null ? killer.NickName : "unknown")}");
-            GetComponent<PlayerController>()?.PlayerDeath(killerObj);
-        }
-        else
-        {
-            Debug.Log($"{gameObject.name} died.");
+            GetComponent<PlayerController>()?.PlayerDeath(skillObj);
         }
     }
 
@@ -199,12 +183,12 @@ public class PlayerLife : MonoBehaviour
 
         if (other.CompareTag("Damage"))
         {
-            Debug.Log("PlayerLife: Triggered by Damage object.");
             PhotonView dmgPv = other.GetComponent<PhotonView>();
-            if (dmgPv != null && pv != null && dmgPv.Owner == pv.Owner)
-                return;
-            Debug.Log("Applying damage from Damage object.");
-            RequestChangeLife(-20);
+            if (dmgPv == null) return;
+
+            if (dmgPv.Owner == pv.Owner) return;
+
+            RequestChangeLife(-20, dmgPv.ViewID);
         }
     }
 
