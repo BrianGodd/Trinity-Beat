@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using Cinemachine;
+using TMPro;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PhotonView))]
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     bool jumpRequested = false;
 
     public GameObject deathEffectPrefab;
+    public TextMeshProUGUI playerNameText;
 
     void Start()
     {
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
             if (vcam != null)
             {
                 vcam.Follow = transform;
+                vcam.LookAt = transform;
             }
         }
     }
@@ -51,6 +54,8 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (!pv.IsMine) return;
+
+        playerNameText.text = PhotonNetwork.NickName;
 
         // use moveInput set by PlayerAction instead of WASD
         if (moveInput.sqrMagnitude > 0f)
@@ -145,6 +150,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath(GameObject killer)
     {
         vcam.Follow = killer.transform;
+        vcam.LookAt = killer.transform;
         GetComponent<PlayerAction>().enabled = false;
         GetComponent<PlayerLife>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
