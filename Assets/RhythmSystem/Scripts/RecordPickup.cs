@@ -1,4 +1,5 @@
 using UnityEngine;
+using Photon.Pun;
 
 public class RecordPickup : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class RecordPickup : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if(GetComponent<PhotonView>() != null)
+        {
+            if(!GetComponent<PhotonView>().IsMine) return;
+        }
         if (_used) return;
         if (!string.IsNullOrEmpty(requiredTag) && !other.CompareTag(requiredTag)) return;
 
