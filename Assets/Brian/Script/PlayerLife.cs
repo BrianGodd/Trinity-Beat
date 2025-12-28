@@ -212,7 +212,7 @@ public class PlayerLife : MonoBehaviour
     {
         foreach (var pv in FindObjectsOfType<PhotonView>())
         {
-            if (pv.Owner == targetPlayer)
+            if (pv.Owner == targetPlayer && pv.CompareTag("Player"))
             {
                 return pv.gameObject;
             }
