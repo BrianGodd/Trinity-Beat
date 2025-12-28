@@ -74,10 +74,24 @@ public class PlayerAction : MonoBehaviour
 
         LastCombo = combo;
 
-        if(!skillManager.SkillDetection(combo.WordString))
+        if (!skillManager.SkillDetection(combo.WordString))
+        {
             StartCoroutine(PerformActionCoroutine(combo.hits));
+        }
+        else
+        {
+            StartCoroutine(LateInitTypingSync());
+        }
     }
+    IEnumerator LateInitTypingSync()
+    {
+        float beatDur = (beatClock != null) ? (float)beatClock.BeatDurationSec : 0.5f;
 
+        beatDur *= 3;
+        yield return new WaitForSeconds(beatDur);
+
+        typingSync.InitWord();
+    }
     IEnumerator PerformActionCoroutine(ComboRecorder.Hit[] hits)
     {
         float beatDur = (beatClock != null) ? (float)beatClock.BeatDurationSec : 0.5f;
