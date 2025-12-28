@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class EnergyBall : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class EnergyBall : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         PlayerLife playerLife = other.GetComponent<PlayerLife>();
-        if(playerLife == null)
+        if(playerLife == null || playerLife.gameObject.GetComponent<PhotonView>().IsMine)
         {
             // playerLife.pv.IsMine
             return;
