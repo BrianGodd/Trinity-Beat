@@ -73,6 +73,7 @@ public class DogEntity : SummonedEntity
 
     public void BeginMovement()
     {
+        if(closestPlayer == null)return;
         isMoving = true;
         agent.isStopped = false;
         agent.SetDestination(closestPlayer.position);
