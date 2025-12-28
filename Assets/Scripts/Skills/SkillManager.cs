@@ -212,7 +212,7 @@ public class SkillManager : MonoBehaviour
 
         PhotonNetwork.Instantiate(
             prefab.name,
-            player.position + player.forward * 0.5f,
+            player.position + player.forward * 0.5f + ((name == "owl" || name == "fog")?5f:0f )* Vector3.up,
             player.rotation
         );
     }
