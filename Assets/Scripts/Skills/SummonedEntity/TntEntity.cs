@@ -55,7 +55,7 @@ public class TntEntity : MonoBehaviour
     {
         if (!pv.IsMine) return;
         pv.RPC(
-            "RpcTriggerEffect",
+            nameof(RpcTriggerEffect),
             RpcTarget.All
         );
     }
