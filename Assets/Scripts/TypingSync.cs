@@ -12,9 +12,11 @@ public class TypingSync : MonoBehaviour
     void Start()
     {
         pv = GetComponent<PhotonView>();
+        if(!pv.IsMine)return;
         comboRecorder = FindObjectOfType<ComboRecorder>();
         comboRecorder.typingSync = this;
     }
+    
     public void ChangeWord(int idx, char c)
     {
         if(!pv.IsMine)return;
