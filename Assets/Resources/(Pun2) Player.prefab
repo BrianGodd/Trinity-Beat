@@ -6233,6 +6233,7 @@ GameObject:
   - component: {fileID: 7249394067688407847}
   - component: {fileID: 8807385685768312062}
   - component: {fileID: 3807669882528388646}
+  - component: {fileID: 2722409252496974744}
   m_Layer: 0
   m_Name: (Pun2) Player
   m_TagString: Player
@@ -6480,6 +6481,19 @@ MonoBehaviour:
   damageCooldown: 0.8
   currentLife: 0
   slowMotionScale: 0.2
+--- !u!114 &2722409252496974744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f5eb72f1e2a5748bc9af9d7b0ffc80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshPro: {fileID: 7519759162490677695}
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
@@ -12653,7 +12667,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8412164261147339419}
   m_LocalRotation: {x: 0.33207884, y: 0, z: 0, w: 0.94325167}
-  m_LocalPosition: {x: 0, y: 0, z: 12.7}
+  m_LocalPosition: {x: 0, y: 0, z: 29.9}
   m_LocalScale: {x: 1.39, y: 1.39, z: 1.39}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -12661,7 +12675,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 38.79, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 33.7}
+  m_AnchoredPosition: {x: 0, y: 55.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &21430532061935828
@@ -12692,7 +12706,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: yfuifiui
+  m_text: _  _  _
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}

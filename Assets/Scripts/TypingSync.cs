@@ -19,14 +19,14 @@ public class TypingSync : MonoBehaviour
     {
         if(!pv.IsMine)return;
         char[] chars = textMeshPro.text.ToCharArray();
-        chars[idx * 2] = c;
+        chars[idx * 3] = c;
         pv.RPC(nameof(RPC_ChangeWord), RpcTarget.All, new string(chars));
 
     }
     public void InitWord()
     {
         if(!pv.IsMine)return;
-        pv.RPC(nameof(RPC_ChangeWord), RpcTarget.All, "_ _ _");
+        pv.RPC(nameof(RPC_ChangeWord), RpcTarget.All, "_  _  _");
     }
 
     [PunRPC]
