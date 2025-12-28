@@ -11,10 +11,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Brian_Multi/BattleGround_new.unity
     guid: a8dc4e3aee6528c4ab79fecabf6344c3
-  - enabled: 1
-    path: Assets/Scenes/Brian_Multi/Lobby.unity
-    guid: 1b230c5dbf1caa94c90c37f2401fa1ec
-  - enabled: 1
-    path: Assets/Scenes/Brian_Multi/BattleGround.unity
-    guid: bc7d943e5be031745b7acff4db0679d6
   m_configObjects: {}
