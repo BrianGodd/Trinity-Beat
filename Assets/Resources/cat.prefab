@@ -10,15 +10,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -524,6 +524,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4082522384956747711}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4026465921990896921}
   m_SourcePrefab: {fileID: 100100000, guid: 840875800689cb148ac8c4bd8fe7ab5e, type: 3}
 --- !u!1 &1345794970531567711 stripped
 GameObject:
@@ -612,3 +615,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4026465921990896921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345794970531567711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
