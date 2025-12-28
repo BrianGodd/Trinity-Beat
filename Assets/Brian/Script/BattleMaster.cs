@@ -36,6 +36,8 @@ public class BattleMaster : MonoBehaviour
     public void SomeOneDead()
     {
         deadCount += 1;
+        playerCount = Photon.Pun.PhotonNetwork.CurrentRoom.PlayerCount - deadCount;
+        Debug.Log($"SomeOneDead called. deadCount: {deadCount}, playerCount: {playerCount}");
         if(playerCount <= 1)
         {
             ShowWinUI();
