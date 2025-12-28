@@ -103,7 +103,7 @@ public class SkillManager : MonoBehaviour
         {
             summonedEntities[i]?.AddLifeCycle(-1);
         }
-        weaponEffect.AddLifeCycle(-1);
+        weaponEffect?.AddLifeCycle(-1);
     }
     public bool SkillDetection(string input)
     {
@@ -179,7 +179,7 @@ public class SkillManager : MonoBehaviour
 
     private void ActionHot()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
     }
 
     private void ActionCut()
@@ -199,17 +199,17 @@ public class SkillManager : MonoBehaviour
 
     private void ActionIce()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Ice);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Ice);
     }
 
     private void ActionWet()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Wet);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Wet);
     }
 
     private void ActionTox()
     {
-        weaponEffect.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
+        weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
         
     }
 
