@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+
 
 [System.Serializable]
 public class EntityPrefabEntry
@@ -12,6 +14,7 @@ public class EntityPrefabEntry
 public class SkillManager : MonoBehaviour
 {
     public static SkillManager Instance;
+
     private Transform player;
     [SerializeField]
     private List<EntityPrefabEntry> entityprefabEntries;
@@ -24,7 +27,7 @@ public class SkillManager : MonoBehaviour
     private List<SummonedEntity> summonedEntities;
 
     [SerializeField]
-    private WeaponEffect weaponEffect;
+    public WeaponEffect weaponEffect;
 
 
     // test parameter
@@ -46,8 +49,26 @@ public class SkillManager : MonoBehaviour
             if (!prefabDict.ContainsKey(entry.key))
                 prefabDict.Add(entry.key, entry.prefab);
         }
+        
         // TODO: get user transform?
-        player = transform;
+        player = FindMyPlayerTransform();
+        
+    }
+
+    Transform FindMyPlayerTransform()
+    {
+        PlayerController[] players = FindObjectsOfType<PlayerController>();
+
+        for (int i = 0; i < players.Length; i++)
+        {
+            PhotonView pv = players[i].GetComponent<PhotonView>();
+            if (pv != null && pv.IsMine)
+            {
+                return players[i].transform;
+            }
+        }
+
+        return null;
     }
 
     // Update is called once per frame
@@ -189,7 +210,11 @@ public class SkillManager : MonoBehaviour
         if (!prefabDict.TryGetValue(name, out var prefab))
         return;
 
-        Instantiate(prefab, player.position + player.forward * 0.5f, player.rotation);
+        PhotonNetwork.Instantiate(
+            prefab.name,
+            player.position + player.forward * 0.5f,
+            player.rotation
+        );
     }
 
 }

@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
+
+[RequireComponent(typeof(PhotonView))]
 public class WeaponEffect : MonoBehaviour
 {
     public enum EnhancementEffect
@@ -12,13 +15,10 @@ public class WeaponEffect : MonoBehaviour
         Wet,
         Tox
     }
+    PhotonView pv;
 
     [SerializeField]
-    private EnhancementEffect enhancementEffect = EnhancementEffect.None;
-    [SerializeField]
-    private Transform startPoint;
-    [SerializeField]
-    private GameObject attackObject;
+    protected EnhancementEffect enhancementEffect = EnhancementEffect.None;
 
     public CatEntity catEntity = null;
 
@@ -30,7 +30,9 @@ public class WeaponEffect : MonoBehaviour
 
     void Start()
     {
-        
+        pv = GetComponent<PhotonView>();
+        if(!pv.IsMine)return;
+        SkillManager.Instance.weaponEffect = this;
     }
 
     // Update is called once per frame
@@ -56,26 +58,13 @@ public class WeaponEffect : MonoBehaviour
         AOELifeCycle += offset;
     }
 
-    public void SetEnhancementEffect(EnhancementEffect newEnhancementEffect)
+    public virtual void SetEnhancementEffect(EnhancementEffect newEnhancementEffect)
     {
         enhancementEffect = newEnhancementEffect;
         effectLifeCycle = 3;
     }
 
-    public void Attack(Vector3 dir, Vector3 delta, float length)
-    {
-        delta += catEntity? (catEntity.transform.position - transform.position).normalized :Vector3.zero;
-        delta.Normalize();
-        delta *= (AimLifeCycle > 0?0.5f:1f) * (RNGLifeCycle > 0?2f:1f);
-        dir += delta;
-        dir.Normalize();
-        GameObject newAttackObject = Instantiate(attackObject, startPoint.position, startPoint.rotation);
-        if(AOELifeCycle > 0)
-        {
-            newAttackObject.transform.localScale *= 2f;
-        }
-        newAttackObject.GetComponent<EnergyBall>()?.Init(dir, length, enhancementEffect);
-    }
+    public virtual void Attack(Vector3 dir, Vector3 delta, float length){}
 
     public float GetCurrentCatDistane()
     {

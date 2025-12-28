@@ -74,7 +74,7 @@ public class EnergyBall : MonoBehaviour
     {
         // 處理被攻擊
         Debug.Log("Attack by " + enhancementEffect);
-        float damage = length * 1.0f;
+        float damage = 1f;
         switch (enhancementEffect)
         {
             case WeaponEffect.EnhancementEffect.Hot:

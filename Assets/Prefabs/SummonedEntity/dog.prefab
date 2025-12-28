@@ -72,6 +72,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ccda184103e6b147b02369f540a1b8a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1516777789569321391}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ccda184103e6b147b02369f540a1b8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7486644278435814917}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2ccda184103e6b147b02369f540a1b8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3922588346067665091}
   m_SourcePrefab: {fileID: 100100000, guid: 2ccda184103e6b147b02369f540a1b8a, type: 3}
 --- !u!1 &6786440613372096355 stripped
 GameObject:
@@ -111,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b49983040707ec438be6a7ac90b124b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifeCycle: 0
+  pv: {fileID: 0}
 --- !u!195 &3432153064677513998
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,3 +161,41 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5800748, y: 0.79973567, z: 1}
   m_Center: {x: -0.012493849, y: 0.410623, z: 0}
+--- !u!114 &7486644278435814917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786440613372096355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-3922588346067665091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786440613372096355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters: []
+  m_SynchronizeLayers: []

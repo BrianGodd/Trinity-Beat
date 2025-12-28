@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Photon.Pun;
 
-
+[RequireComponent(typeof(PhotonView))]
 public class SummonedEntity : MonoBehaviour
 {
     [SerializeField]
     protected int lifeCycle = 0;
+
+    protected PhotonView pv;
+
 
     public virtual void Start()
     {
@@ -16,6 +20,7 @@ public class SummonedEntity : MonoBehaviour
         {
             SetLifeCycle(5);
         }
+        pv = GetComponent<PhotonView>();
     }
     public void SetLifeCycle(int cycle)
     {
@@ -38,7 +43,6 @@ public class SummonedEntity : MonoBehaviour
     {
         SkillManager.Instance.RemoveFromEntitiesList(this);
         Debug.Log("Runner.Despawn(Object);");
-        Destroy(gameObject);
-        
+        PhotonNetwork.Destroy(gameObject);
     }
 }
