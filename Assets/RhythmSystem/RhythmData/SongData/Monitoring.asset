@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e5e1303db0cc94b9af622b0147c17d, type: 3}
+  m_Name: Monitoring
+  m_EditorClassIdentifier: 
+  title: Monitoring
+  albumCover: {fileID: 2800000, guid: 7e5140eaed38bd744872867f3a24ecc7, type: 3}
+  bgm: {fileID: 8300000, guid: 53a8433b3934f2b45b4f72a69980e1ae, type: 3}
+  loop: 1
+  bpm: 132
+  beat0OffsetSec: 0.97
+  timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
+  tutorialCycles: 0

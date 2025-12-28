@@ -6233,7 +6233,7 @@ GameObject:
   - component: {fileID: 8807385685768312062}
   m_Layer: 0
   m_Name: (Pun2) Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6425,8 +6425,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 820aa3b4432083a4da1d1c17df82fa91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveForce: 30
-  maxSpeed: 5
+  moveForce: 50
+  maxSpeed: 10
   groundDrag: 3
   jumpForce: 6
   groundCheckDistance: 0.2
