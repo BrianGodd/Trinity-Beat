@@ -48,12 +48,12 @@ public class DogEntity : SummonedEntity
     void Update()
     {
         if (!pv.IsMine) return;
-        if (!isMoving || closestPlayer == null) return;
+        if (closestPlayer == null) return;
         Vector3 dist = closestPlayer.position - transform.position;
         dist.y = 0;
-        if(dist.magnitude < 1f)
+        if(dist.magnitude < 2.5f)
         {
-            if (!isMoving)
+            if (isMoving)
             {
                 StopMovement();
             }
@@ -77,6 +77,8 @@ public class DogEntity : SummonedEntity
         isMoving = true;
         agent.isStopped = false;
         agent.SetDestination(closestPlayer.position);
+        animator.SetBool("isWalking", true);
+
     }
 
     public void StopMovement()

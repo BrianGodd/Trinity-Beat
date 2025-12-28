@@ -6238,7 +6238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3540754164833923901
 Transform:
   m_ObjectHideFlags: 0
@@ -6434,6 +6434,7 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
+  deathEffectPrefab: {fileID: 0}
 --- !u!114 &8807385685768312062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6477,7 +6478,6 @@ MonoBehaviour:
   damageCooldown: 0.8
   currentLife: 0
   slowMotionScale: 0.2
-  isDebug: 0
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
