@@ -72,6 +72,6 @@ public class RecordPickup : MonoBehaviour
     void DoLoad()
     {
         songPlayer.LoadSong(song); // immediate switch behavior already inside RhythmSongPlayer
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }

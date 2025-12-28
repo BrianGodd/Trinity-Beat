@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!pv.IsMine) return;
 
-        playerNameText.text = PhotonNetwork.NickName;
+        playerNameText.text = pv.Owner.NickName;
 
         // use moveInput set by PlayerAction instead of WASD
         if (moveInput.sqrMagnitude > 0f)

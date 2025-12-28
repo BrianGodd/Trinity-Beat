@@ -191,6 +191,7 @@ public class PlayerLife : MonoBehaviour
         if (pv.IsMine)
         {
             GetComponent<PlayerController>()?.PlayerDeath(skillObj);
+            GameObject.FindObjectOfType<BattleMaster>().SomeOneDead();
         }
     }
 
