@@ -139,4 +139,12 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(horizontal.x, v.y, horizontal.z);
         }
     }
+
+    public void PlayerDeath(GameObject killer)
+    {
+        vcam.Follow = killer.transform;
+        GetComponent<PlayerAction>().enabled = false;
+        GetComponent<PlayerLife>().enabled = false;
+        GetComponent<PlayerController>().enabled = false;
+    }
 }

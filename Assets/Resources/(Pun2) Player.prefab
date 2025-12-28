@@ -6473,8 +6473,10 @@ MonoBehaviour:
   - {fileID: 323413122342866863}
   - {fileID: 1264727997945921584}
   - {fileID: 1666093111255147799}
+  damageCooldown: 0.8
   currentLife: 0
-  isDebug: 1
+  slowMotionScale: 0.2
+  isDebug: 0
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
