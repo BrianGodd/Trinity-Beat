@@ -192,12 +192,11 @@ public class PlayerLife : MonoBehaviour
 
         if (other.CompareTag("Damage"))
         {
-            // ignore damage if it's from our own spawned object (same Photon owner)
-            PhotonView dmgPv = other.GetComponent<PhotonView>() ?? other.GetComponentInParent<PhotonView>();
-            if (dmgPv != null && pv != null && pv.Owner != null && dmgPv.Owner != null && dmgPv.Owner == pv.Owner)
-                return;
-
             Debug.Log("PlayerLife: Triggered by Damage object.");
+            PhotonView dmgPv = other.GetComponent<PhotonView>();
+            if (dmgPv != null && pv != null && dmgPv.Owner == pv.Owner)
+                return;
+            Debug.Log("Applying damage from Damage object.");
             RequestChangeLife(-20);
         }
     }
