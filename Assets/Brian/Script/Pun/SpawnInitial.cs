@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SpawnInitial : MonoBehaviour
 {
     public Transform[] spawnPoint;
-    public string[] spawnPrefab;
+    public GameObject[] spawnPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +27,9 @@ public class SpawnInitial : MonoBehaviour
         yield return new WaitForSeconds(time);
         
         int i = 0;
-        foreach(string obj in spawnPrefab)
+        foreach(GameObject obj in spawnPrefab)
         {
-            GameObject prefab = PhotonNetwork.Instantiate(obj, spawnPoint[i].position, spawnPoint[i].rotation);
+            GameObject prefab = PhotonNetwork.Instantiate(obj.name, spawnPoint[i].position, spawnPoint[i].rotation);
             
             i++;
         }

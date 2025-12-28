@@ -9660,9 +9660,10 @@ GameObject:
   - component: {fileID: 7959901457400992468}
   - component: {fileID: 6047836270193347505}
   - component: {fileID: 6062266882857202370}
+  - component: {fileID: 5283360872534322595}
   m_Layer: 0
   m_Name: Death_Dust
-  m_TagString: Untagged
+  m_TagString: DDusk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14524,3 +14525,24 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!65 &5283360872534322595
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840462660306790848}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 32.94, y: 13.7, z: 11.3}
+  m_Center: {x: 0, y: 0, z: 0}

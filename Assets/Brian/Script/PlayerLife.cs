@@ -194,6 +194,20 @@ public class PlayerLife : MonoBehaviour
         }
     }
 
+    void OnTriggerStay(Collider other)
+    {
+        if (!pv.IsMine) return;
+
+        if (other.CompareTag("DDusk"))
+        {
+            Debug.Log("PlayerLife: Hit by Dusk object");
+            PhotonView dmgPv = other.GetComponent<PhotonView>() ?? other.GetComponentInParent<PhotonView>();
+            if (dmgPv == null) return;
+
+            RequestChangeLife(-5, -1);
+        }
+    }
+
     GameObject FindPlayerObject(Photon.Realtime.Player targetPlayer)
     {
         foreach (var pv in FindObjectsOfType<PhotonView>())

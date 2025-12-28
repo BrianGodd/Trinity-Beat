@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bullet
   - Damage
+  - DDusk
+  - Bush
   layers:
   - Default
   - TransparentFX
