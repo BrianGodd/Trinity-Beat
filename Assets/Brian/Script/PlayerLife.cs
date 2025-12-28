@@ -187,8 +187,8 @@ public class PlayerLife : MonoBehaviour
             $"Killed by skill: {skillObj?.name}, " +
             $"Owner: {killerPlayer?.NickName}"
         );
-        
-        GameObject.FindObjectOfType<BattleMaster>().SomeOneDead();
+
+        GameObject.Find("GameManager").GetComponent<BattleMaster>().SomeOneDead();
 
         if (pv.IsMine)
         {
