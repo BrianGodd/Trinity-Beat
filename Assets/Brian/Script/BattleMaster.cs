@@ -11,7 +11,7 @@ public class BattleMaster : MonoBehaviour
     public int deadCount = 0;
     public int playerCount = 0;
 
-    private GameObject showUI;
+    public bool isDead = false;
     
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class BattleMaster : MonoBehaviour
         GameObject cd = Instantiate(deathEffectPrefab);
         cd.transform.parent = UIRect;
         cd.transform.localPosition = Vector3.zero;
-        showUI = cd;
+        isDead = true;
     }
 
     public void SomeOneDead()
@@ -46,7 +46,7 @@ public class BattleMaster : MonoBehaviour
 
     public void ShowWinUI()
     {
-        if(showUI == null) return;
+        if(isDead) return;
         GameObject cd = Instantiate(winEffectPrefab);
         cd.transform.parent = UIRect;
         cd.transform.localPosition = Vector3.zero;   
