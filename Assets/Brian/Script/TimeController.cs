@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using ExitGames.Client.Photon;
+using TMPro;
 
 public class TimeController : MonoBehaviourPunCallbacks
 {
-    public GameObject dustPrefab;
+    public RectTransform UIRect;
+    public GameObject dustPrefab, CountDownPrefab;
     public List<Transform> spawnPos = new List<Transform>();
 
     const double INTERVAL = 60.0;
@@ -19,6 +21,8 @@ public class TimeController : MonoBehaviourPunCallbacks
     void Start()
     {
         StartCoroutine(StartTimerByWaitTime(3.0f));
+        StartCoroutine(CountDown(3));
+        
     }
 
     void Update()
@@ -40,6 +44,24 @@ public class TimeController : MonoBehaviourPunCallbacks
     {
         yield return new WaitForSeconds(waitTime);
         StartTimer();
+    }
+
+    System.Collections.IEnumerator CountDown(int ctime)
+    {
+        for(int i = ctime;i >= 0; i--)
+        {
+            GameObject cd = Instantiate(CountDownPrefab);
+            if(i == 0) 
+            {
+                cd.GetComponent<TextMeshProUGUI>().text = "Start";
+                cd.GetComponent<TextMeshProUGUI>().fontSize = 80;
+            }
+            else cd.GetComponent<TextMeshProUGUI>().text = i.ToString();
+            cd.transform.parent = UIRect;
+            cd.transform.localPosition = Vector3.zero;
+            Destroy(cd, 1.5f);
+            if(i > 0) yield return new WaitForSeconds(1);       
+        }
     }
 
     public void StartTimer()
