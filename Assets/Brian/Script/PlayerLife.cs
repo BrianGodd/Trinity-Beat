@@ -184,11 +184,12 @@ public class PlayerLife : MonoBehaviour
 
         if (other.CompareTag("Damage"))
         {
+            Debug.Log("PlayerLife: Hit by Damage object");
             PhotonView dmgPv = other.GetComponent<PhotonView>();
             if (dmgPv == null) return;
 
             if (dmgPv.Owner == pv.Owner) return;
-
+            Debug.Log($"Hit by damage object owned by: {dmgPv.ViewID}");
             RequestChangeLife(-20, dmgPv.ViewID);
         }
     }
