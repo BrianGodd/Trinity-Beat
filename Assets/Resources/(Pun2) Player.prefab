@@ -6234,6 +6234,7 @@ GameObject:
   - component: {fileID: 8807385685768312062}
   - component: {fileID: 3807669882528388646}
   - component: {fileID: 2722409252496974744}
+  - component: {fileID: 4001607659631910394}
   m_Layer: 0
   m_Name: (Pun2) Player
   m_TagString: Player
@@ -6495,6 +6496,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMeshPro: {fileID: 7519759162490677695}
+--- !u!114 &4001607659631910394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4378835550322292051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c77dc8693ed274a871ee19b86a54e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localAlphaInBush: 0.19
+  fadeRenderers:
+  - {fileID: 2484697032109179351}
+  - {fileID: 8049571208791553535}
+  hideRenderers:
+  - {fileID: 2484697032109179351}
+  - {fileID: 8049571208791553535}
+  useBufferedRpc: 1
+  tweakLitForTransparency: 1
+  forcedMetallic: 0
+  forcedSmoothness: 0.2
 --- !u!1 &4419919470672744050
 GameObject:
   m_ObjectHideFlags: 0
