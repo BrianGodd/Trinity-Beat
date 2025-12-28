@@ -12,6 +12,7 @@ public class PlayerAction : MonoBehaviour
     [Header("UI")]
     public GameObject UISurface;
     public TextMeshProUGUI actionText;
+    TypingSync typingSync;
 
     public ComboCaster comboCaster;
     public BeatClock beatClock;
@@ -32,6 +33,7 @@ public class PlayerAction : MonoBehaviour
         beatClock = FindObjectOfType<BeatClock>();
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        typingSync = GetComponent<TypingSync>();
         playerController = GetComponent<PlayerController>();
         skillManager = FindObjectOfType<SkillManager>();
 
@@ -105,6 +107,7 @@ public class PlayerAction : MonoBehaviour
                 yield return new WaitForSeconds(beatDur);
             }
         }
+        typingSync.InitWord();
     }
 
     void ApplyActionStart(ComboRecorder.Hit hit)

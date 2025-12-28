@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
+[RequireComponent(typeof(PhotonView))]
 public class EnergyBall : MonoBehaviour
 {
     private Vector3 direction;
@@ -13,17 +14,21 @@ public class EnergyBall : MonoBehaviour
     private WeaponEffect.EnhancementEffect enhancementEffect;
     [SerializeField]
     private List<ParticleSystem> particleSystems;
+    PhotonView pv;
+
 
     // test parameter
     public float timer = 0f;
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         originalPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!pv.IsMine)return;
         transform.position += direction * Time.deltaTime * length / existTime;
         visualEffect.position = originalPosition + (transform.position - originalPosition) /2f;
         Vector3 scale = visualEffect.localScale;
@@ -72,10 +77,10 @@ public class EnergyBall : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        if(pv.IsMine)return;
         PlayerLife playerLife = other.GetComponent<PlayerLife>();
-        if(playerLife == null || playerLife.gameObject.GetComponent<PhotonView>().IsMine)
+        if(playerLife == null || !playerLife.gameObject.GetComponent<PhotonView>().IsMine)
         {
-            // playerLife.pv.IsMine
             return;
         }
         // 處理被攻擊
@@ -100,8 +105,6 @@ public class EnergyBall : MonoBehaviour
 
         }
         playerLife.RequestChangeLife((int)damage);
-        // other.GetComponent<HPSystem>().TakeDamage(damage);
-
     }
 
     // void OnTriggerExit(Collider other)

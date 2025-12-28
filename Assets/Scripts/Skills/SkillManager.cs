@@ -31,10 +31,8 @@ public class SkillManager : MonoBehaviour
 
     [SerializeField]
     public PlayerLife playerLife;
+    public PlayerController playerController;
 
-
-    // test parameter
-    public float timer = 0f;
 
 
     // Start is called before the first frame update
@@ -67,6 +65,9 @@ public class SkillManager : MonoBehaviour
             PhotonView pv = players[i].GetComponent<PhotonView>();
             if (pv != null && pv.IsMine)
             {
+                playerLife = players[i].GetComponent<PlayerLife>();
+                playerController = players[i].GetComponent<PlayerController>();
+
                 return players[i].transform;
             }
         }
@@ -77,16 +78,6 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // timer += Time.deltaTime;
-        // if(timer > 5f)
-        // {
-        //     AfterCycle();
-        //     timer -= 5f;
-        // }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SkillDetection("tnt");
-        }
     }
 
     public void AddIntoEntitiesList(SummonedEntity summonedEntity)
@@ -155,9 +146,15 @@ public class SkillManager : MonoBehaviour
         }
         return true;
     }
+
     private void ActionRun()
     {
         // increase speed in PlayerController
+        if(playerController == null)
+        {
+            FindMyPlayerTransform();
+        }
+        // playerController.maxSpeed = 7.5f;
     }
 
     private void ActionRng()
@@ -168,12 +165,20 @@ public class SkillManager : MonoBehaviour
     private void ActionFly()
     {
         // increase jumpForce in PlayerController
-        
+        if(playerController == null)
+        {
+            FindMyPlayerTransform();
+        }
+        // playerController.jumpForce = 9f;
     }
 
     private void ActionFix()
     {
         // heal one hp
+        if(playerLife == null)
+        {
+            FindMyPlayerTransform();
+        }
         playerLife.RequestChangeLife(20);
     }
 
@@ -181,12 +186,6 @@ public class SkillManager : MonoBehaviour
     {
         weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Hot);
     }
-
-    private void ActionCut()
-    {
-        
-    }
-
     private void ActionAim()
     {
         weaponEffect.AimLifeCycle = 3;
@@ -210,7 +209,6 @@ public class SkillManager : MonoBehaviour
     private void ActionTox()
     {
         weaponEffect?.SetEnhancementEffect(WeaponEffect.EnhancementEffect.Tox);
-        
     }
 
     private void ActionSummon(string name)
@@ -220,7 +218,7 @@ public class SkillManager : MonoBehaviour
 
         PhotonNetwork.Instantiate(
             prefab.name,
-            player.position + player.forward * 0.5f + ((name == "owl")?3f:0f )* Vector3.up,
+            player.position + player.forward * 0.5f + ((name == "owl")?3f:(name == "fog")?1.5f:0f )* Vector3.up,
             player.rotation
         );
     }

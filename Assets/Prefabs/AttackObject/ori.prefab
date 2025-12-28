@@ -14333,6 +14333,7 @@ GameObject:
   - component: {fileID: 517841796872731411}
   - component: {fileID: 7359833699434104785}
   - component: {fileID: 1630190188556862197}
+  - component: {fileID: 4360395958719676509}
   m_Layer: 0
   m_Name: ori
   m_TagString: Untagged
@@ -19115,7 +19116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090fb4ca3fecd5d4ca19a5e94938e2b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  existTime: 5
+  existTime: 2
   visualEffect: {fileID: 1295063881667471480}
   particleSystems:
   - {fileID: 6853134537045082927}
@@ -19144,3 +19145,25 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4360395958719676509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8348876674290000754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
