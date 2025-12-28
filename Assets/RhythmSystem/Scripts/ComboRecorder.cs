@@ -28,6 +28,9 @@ public class ComboRecorder : MonoBehaviour
     public HitWindowBeats beat0Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
     public HitWindowBeats beat1Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
     public HitWindowBeats beat2Window = new HitWindowBeats { earlyBeats = 0.5f, lateBeats = 0.5f };
+    
+    [Header("Sync Typing")]
+    public TypingSync typingSync;
 
     [Header("Debug")]
     public bool logBeats = true;
@@ -172,6 +175,8 @@ public class ComboRecorder : MonoBehaviour
         LastCombo = combo;
 
         OnHitRecorded?.Invoke(hit);
+
+        typingSync.ChangeWord(slot012, glyphChar);
 
         if (logInputs)
         {
