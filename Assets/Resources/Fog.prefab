@@ -13,11 +13,10 @@ GameObject:
   - component: {fileID: 3404483918679994010}
   - component: {fileID: 2930746712461132356}
   - component: {fileID: 2614950457554929211}
-  - component: {fileID: 7941458880734766513}
   - component: {fileID: 5379092955874105230}
   - component: {fileID: -7155282073071151239}
   m_Layer: 0
-  m_Name: fog
+  m_Name: Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,19 +124,7 @@ MonoBehaviour:
   renderer: {fileID: 3404483918679994010}
   originalMaterial: {fileID: 2100000, guid: 6f4e3df657838a04a9a3889a765a7cfd, type: 2}
   visibleMaterial: {fileID: 2100000, guid: 95ead461f9fddbc47ac6f7143c0029b8, type: 2}
---- !u!114 &7941458880734766513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3715634847966078590}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88f0ae08846978042ae3488651c3cf0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  areaId: 0
+  counter: 0
 --- !u!114 &5379092955874105230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +144,6 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 7941458880734766513}
   - {fileID: -7155282073071151239}
   sceneViewId: 0
   InstantiationId: 0

@@ -105,8 +105,6 @@ public class EnergyBall : MonoBehaviour
 
         }
         playerLife.RequestChangeLife((int)damage);
-        // other.GetComponent<HPSystem>().TakeDamage(damage);
-
     }
 
     // void OnTriggerExit(Collider other)
