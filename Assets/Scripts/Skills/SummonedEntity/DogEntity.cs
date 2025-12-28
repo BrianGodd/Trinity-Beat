@@ -2,29 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Photon.Pun;
 
 public class DogEntity : SummonedEntity
 {
     Transform closestPlayer;
     NavMeshAgent agent;
+    Animator animator;
     bool isMoving = false;
     // Update is called once per frame
     public override void Start()
     {
         base.Start();
         agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+
+        if (!pv.IsMine) return;
         closestPlayer = FindClosestPlayer();
-        // BeginMovement();
+        BeginMovement();
+        
     }
 
     Transform FindClosestPlayer()
     {
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
         Transform closest = null;
         float minDist = float.MaxValue;
 
-        foreach (GameObject p in players)
+        foreach (var p in players)
         {
+            PhotonView pv = p.GetComponent<PhotonView>();
+            if (pv == null || pv.IsMine) continue;
+
             float dist = Vector3.Distance(transform.position, p.transform.position);
             if (dist < minDist)
             {
@@ -37,8 +47,27 @@ public class DogEntity : SummonedEntity
     }
     void Update()
     {
+        if (!pv.IsMine) return;
         if (!isMoving || closestPlayer == null) return;
-        agent.SetDestination(closestPlayer.position);
+        Vector3 dist = closestPlayer.position - transform.position;
+        dist.y = 0;
+        if(dist.magnitude < 1f)
+        {
+            if (!isMoving)
+            {
+                StopMovement();
+            }
+
+        }
+        else
+        {
+            if (!isMoving)
+            {
+                BeginMovement();
+                animator.SetBool("isWalking", true);
+            }
+            agent.SetDestination(closestPlayer.position);
+        }
     }
     
 
@@ -51,6 +80,7 @@ public class DogEntity : SummonedEntity
 
     public void StopMovement()
     {
+        animator.SetBool("isWalking", false);
         isMoving = false;
         agent.isStopped = true;
     }
