@@ -185,7 +185,7 @@ public class PlayerLife : MonoBehaviour
         if (other.CompareTag("Damage"))
         {
             Debug.Log("PlayerLife: Hit by Damage object");
-            PhotonView dmgPv = other.GetComponent<PhotonView>();
+            PhotonView dmgPv = other.GetComponent<PhotonView>() ?? other.GetComponentInParent<PhotonView>();
             if (dmgPv == null) return;
 
             if (dmgPv.Owner == pv.Owner) return;
