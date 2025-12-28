@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e5e1303db0cc94b9af622b0147c17d, type: 3}
+  m_Name: YAJU&U
+  m_EditorClassIdentifier: 
+  title: YAJU&U
+  albumCover: {fileID: 0}
+  bgm: {fileID: 8300000, guid: d6115eb37c17d2b479b542efa16f71cb, type: 3}
+  loop: 1
+  bpm: 100
+  beat0OffsetSec: 1.4
+  timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
+  tutorialCycles: 1

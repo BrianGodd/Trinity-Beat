@@ -112,6 +112,16 @@ public class RhythmHitsAudio : MonoBehaviour
         src.PlayScheduled(dspTime);
     }
 
+    public void StopAllScheduled()
+    {
+        if (_scheduledSources != null)
+        {
+            for (int i = 0; i < _scheduledSources.Length; i++)
+                if (_scheduledSources[i] != null) _scheduledSources[i].Stop();
+        }
+    }
+
+
     void PlayOneShotRandom(AudioClip[] list, AudioClip fallback, float vol)
     {
         var c = PickRandom(list);

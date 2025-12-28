@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79e5e1303db0cc94b9af622b0147c17d, type: 3}
+  m_Name: Telepathy
+  m_EditorClassIdentifier: 
+  title: Telepathy
+  albumCover: {fileID: 2800000, guid: 98297cf9ba760fb4c8e461f0b3aa88f9, type: 3}
+  bgm: {fileID: 8300000, guid: 1146a8818aeab5d44b963f55edffbbb0, type: 3}
+  loop: 1
+  bpm: 205
+  beat0OffsetSec: 0.63
+  timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
+  tutorialCycles: 0
