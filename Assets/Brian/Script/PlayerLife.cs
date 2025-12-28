@@ -173,12 +173,19 @@ public class PlayerLife : MonoBehaviour
         // local reaction to death (run once per object when life hits zero)
         if (animator != null) animator.SetTrigger("dead");
 
+        GameObject killerObj = null;
+        if (killer != null)
+        {
+            killerObj = FindPlayerObject(killer);
+            Debug.Log($"Killed by player: {killerObj.name}");
+        }
+
         // example: if this is local player's object, you might want to notify GameManager, respawn, etc.
         if (pv != null && pv.IsMine)
         {
             // TODO: insert local-player death handling (respawn, disable input, etc.)
             Debug.Log($"You died. Killer: {(killer != null ? killer.NickName : "unknown")}");
-            GetComponent<PlayerController>()?.PlayerDeath(killer?.TagObject as GameObject);
+            GetComponent<PlayerController>()?.PlayerDeath(killerObj);
         }
         else
         {
@@ -199,6 +206,18 @@ public class PlayerLife : MonoBehaviour
             Debug.Log("Applying damage from Damage object.");
             RequestChangeLife(-20);
         }
+    }
+
+    GameObject FindPlayerObject(Photon.Realtime.Player targetPlayer)
+    {
+        foreach (var pv in FindObjectsOfType<PhotonView>())
+        {
+            if (pv.Owner == targetPlayer)
+            {
+                return pv.gameObject;
+            }
+        }
+        return null;
     }
 
     // utility getters
