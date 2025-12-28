@@ -86751,6 +86751,65 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519856091}
   m_Mesh: {fileID: 4300000, guid: bf046c97ab7711b4abb584364b1e5309, type: 2}
+--- !u!1 &1521768734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1521768736}
+  - component: {fileID: 1521768735}
+  m_Layer: 0
+  m_Name: Skill Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1521768735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521768734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b208b91d5a401848bc2116492e9c960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityprefabEntries:
+  - key: cat
+    prefab: {fileID: 1345794970531567711, guid: 238acbc2e7fd2f140a1a69b4a2ca4a23, type: 3}
+  - key: fog
+    prefab: {fileID: 3715634847966078590, guid: 22d1e61d3c680b348b49cf661397692e, type: 3}
+  - key: dog
+    prefab: {fileID: 6786440613372096355, guid: b3c489c6ced931a46b245f1f367ae23d, type: 3}
+  - key: tnt
+    prefab: {fileID: 5373347391083644274, guid: ce9bbe6310c33e4429845faf91dffafe, type: 3}
+  - key: owl
+    prefab: {fileID: 8273452274145971613, guid: b6a043c986547d648bf160c94f39f1e1, type: 3}
+  summonedEntities: []
+  weaponEffect: {fileID: 0}
+  playerLife: {fileID: 0}
+  timer: 0
+--- !u!4 &1521768736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1521768734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6829271, y: 1.4856678, z: 0.869063}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1522455267
 GameObject:
   m_ObjectHideFlags: 0
@@ -118769,5 +118828,6 @@ SceneRoots:
   - {fileID: 1133944084}
   - {fileID: 424745688}
   - {fileID: 985202950}
+  - {fileID: 1521768736}
   - {fileID: 1438366666}
   - {fileID: 4018485729348603934}

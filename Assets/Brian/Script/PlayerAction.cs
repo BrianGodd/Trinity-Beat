@@ -15,6 +15,7 @@ public class PlayerAction : MonoBehaviour
 
     public ComboCaster comboCaster;
     public BeatClock beatClock;
+    public SkillManager skillManager;
     PhotonView pv;
     PlayerController playerController;
 
@@ -32,6 +33,7 @@ public class PlayerAction : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         playerController = GetComponent<PlayerController>();
+        skillManager = FindObjectOfType<SkillManager>();
 
         if (comboCaster != null && comboCaster.comboRecorder != null)
         {
@@ -68,7 +70,8 @@ public class PlayerAction : MonoBehaviour
 
         LastCombo = combo;
 
-        StartCoroutine(PerformActionCoroutine(combo.hits));
+        if(!skillManager.SkillDetection(combo.WordString))
+            StartCoroutine(PerformActionCoroutine(combo.hits));
     }
 
     IEnumerator PerformActionCoroutine(ComboRecorder.Hit[] hits)
