@@ -6234,7 +6234,7 @@ GameObject:
   - component: {fileID: 3807669882528388646}
   m_Layer: 0
   m_Name: (Pun2) Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6451,6 +6451,7 @@ MonoBehaviour:
   actionText: {fileID: 7519759162490677695}
   comboCaster: {fileID: 0}
   beatClock: {fileID: 0}
+  skillManager: {fileID: 0}
 --- !u!114 &3807669882528388646
 MonoBehaviour:
   m_ObjectHideFlags: 0
