@@ -33,6 +33,10 @@ public class PlayerLife : MonoBehaviour
 
     // timestamp of last time this player locally caused a damage RPC (used for cooldown)
     float lastDamageTime = -Mathf.Infinity;
+    
+    [SerializeField, Header("Parry")]
+    public GameObject parryShield;
+    Vector3 parryDirection;
 
     // event invoked when life changes: (newLife, oldLife)
     public event System.Action<int,int> OnLifeChanged;
@@ -43,6 +47,7 @@ public class PlayerLife : MonoBehaviour
         animator = GetComponent<Animator>();
         currentLife = Mathf.Clamp(startLife, 0, maxLife);
         UpdateLifeSegments();
+        parryDirection = Vector3.zero;
     }
 
     void Update()
@@ -200,9 +205,24 @@ public class PlayerLife : MonoBehaviour
             if (dmgPv == null) return;
 
             if (dmgPv.Owner == pv.Owner) return;
+            if( parryDirection != Vector3.zero && Vector3.Angle( -parryDirection, dmgPv.transform.forward) < 20f)
+            {
+                Debug.Log($"Parry attack by damage object owned by: {dmgPv.transform.GetComponent<Skill>()?.ownerViewID}");
+                Vector3 spawnPos = transform.position + Vector3.up * 1f + parryDirection * 1f;
+                Quaternion spawnRot = Quaternion.LookRotation(parryDirection, Vector3.up);
+
+                GameObject obj = PhotonNetwork.Instantiate(parryShield.name, spawnPos, spawnRot);
+                return;
+            }
             Debug.Log($"Hit by damage object owned by: {dmgPv.transform.GetComponent<Skill>()?.ownerViewID}");
+
             RequestChangeLife(-20, dmgPv.transform.GetComponent<Skill>().ownerViewID);
         }
+    }
+
+    public void SetParryDirection(Vector3 dir)
+    {
+        parryDirection = dir;
     }
 
     void OnTriggerStay(Collider other)
