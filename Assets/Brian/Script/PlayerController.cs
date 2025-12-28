@@ -53,10 +53,11 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!pv.IsMine) return;
-
         playerNameText.text = pv.Owner.NickName;
 
+        // Debug.Log($"nickname: {pv.Owner.NickName}");
+
+        if (!pv.IsMine) return;
         // use moveInput set by PlayerAction instead of WASD
         if (moveInput.sqrMagnitude > 0f)
         {
