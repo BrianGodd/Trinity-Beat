@@ -8,6 +8,7 @@ TagManager:
   - Damage
   - DDusk
   - Bush
+  - Lightning
   layers:
   - Default
   - TransparentFX

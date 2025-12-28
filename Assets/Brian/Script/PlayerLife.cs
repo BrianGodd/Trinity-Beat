@@ -237,6 +237,14 @@ public class PlayerLife : MonoBehaviour
 
             RequestChangeLife(-5, -1);
         }
+        if (other.CompareTag("Lightning"))
+        {
+            Debug.Log("PlayerLife: Hit by Lightning object");
+            PhotonView dmgPv = other.GetComponent<PhotonView>() ?? other.GetComponentInParent<PhotonView>();
+            if (dmgPv == null) return;
+
+            RequestChangeLife(-10, -1);
+        }
     }
 
     GameObject FindPlayerObject(Photon.Realtime.Player targetPlayer)
