@@ -46,6 +46,8 @@ public class OwlEntity : SummonedEntity
         FogEntity fogEntity = other.gameObject.GetComponent<FogEntity>();
         if(fogEntity != null)
         {
+            fogEntity.counter += 1;
+
             fogEntity.EnableVisibiity(true);
         }
     }
@@ -58,7 +60,11 @@ public class OwlEntity : SummonedEntity
         FogEntity fogEntity = other.gameObject.GetComponent<FogEntity>();
         if(fogEntity != null)
         {
-            fogEntity.EnableVisibiity(false);
+            fogEntity.counter -= 1;
+            if(fogEntity.counter  == 0)
+            {
+                fogEntity.EnableVisibiity(false); 
+            }
         }
     }
     protected override void DestroyEffect()
