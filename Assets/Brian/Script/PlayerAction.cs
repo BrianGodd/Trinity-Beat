@@ -19,6 +19,7 @@ public class PlayerAction : MonoBehaviour
     public SkillManager skillManager;
     PhotonView pv;
     PlayerController playerController;
+    PlayerLife playerLife;
 
     Rigidbody rb;
     Animator animator;
@@ -34,6 +35,7 @@ public class PlayerAction : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         typingSync = GetComponent<TypingSync>();
+        playerLife = GetComponent<PlayerLife>();
         playerController = GetComponent<PlayerController>();
         skillManager = FindObjectOfType<SkillManager>();
 
@@ -108,6 +110,7 @@ public class PlayerAction : MonoBehaviour
             }
         }
         typingSync.InitWord();
+        playerLife.SetParryDirection(Vector3.zero);
     }
 
     void ApplyActionStart(ComboRecorder.Hit hit)
@@ -146,6 +149,7 @@ public class PlayerAction : MonoBehaviour
                 }
                 if (animator != null)
                     animator.SetBool("walking", true);
+                playerLife.SetParryDirection(Vector3.zero);
                 break;
 
             case BeatActionType.Attack:
@@ -170,6 +174,7 @@ public class PlayerAction : MonoBehaviour
                             skillComp.ownerViewID = (pv != null) ? pv.ViewID : -1;
                     }
                 }
+                playerLife.SetParryDirection(Vector3.zero);
                 break;
 
             case BeatActionType.Parry:
@@ -177,6 +182,7 @@ public class PlayerAction : MonoBehaviour
                 if (animator != null)
                     animator.SetTrigger("parry");
                 // optionally set a parry flag / enable parry collider (not implemented here)
+                playerLife.SetParryDirection(dirVec);
                 break;
         }
     }

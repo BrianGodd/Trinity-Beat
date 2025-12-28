@@ -6481,6 +6481,7 @@ MonoBehaviour:
   damageCooldown: 0.8
   currentLife: 0
   slowMotionScale: 0.2
+  parryShield: {fileID: 4476609921675602011, guid: 6fe4b4b26577ceb489ae0acf7924b26e, type: 3}
 --- !u!114 &2722409252496974744
 MonoBehaviour:
   m_ObjectHideFlags: 0
