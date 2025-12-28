@@ -69,6 +69,7 @@ public class PlayerLife : MonoBehaviour
         }
 
         // send RPC to apply change on all clients
+        Debug.Log($"RequestChangeLife: amount={amount}, attackerViewID={attackerViewID}");
         pv.RPC(nameof(RPC_ChangeLife), RpcTarget.All, amount, attackerViewID);
     }
 
