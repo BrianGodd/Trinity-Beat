@@ -69,6 +69,7 @@ public class PlayerLife : MonoBehaviour
         }
 
         // send RPC to apply change on all clients
+        Debug.Log($"RequestChangeLife: amount={amount}, attackerViewID={attackerViewID}");
         pv.RPC(nameof(RPC_ChangeLife), RpcTarget.All, amount, attackerViewID);
     }
 
@@ -183,11 +184,12 @@ public class PlayerLife : MonoBehaviour
 
         if (other.CompareTag("Damage"))
         {
-            PhotonView dmgPv = other.GetComponent<PhotonView>();
+            Debug.Log("PlayerLife: Hit by Damage object");
+            PhotonView dmgPv = other.GetComponent<PhotonView>() ?? other.GetComponentInParent<PhotonView>();
             if (dmgPv == null) return;
 
             if (dmgPv.Owner == pv.Owner) return;
-
+            Debug.Log($"Hit by damage object owned by: {dmgPv.ViewID}");
             RequestChangeLife(-20, dmgPv.ViewID);
         }
     }

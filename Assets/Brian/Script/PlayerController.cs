@@ -148,6 +148,6 @@ public class PlayerController : MonoBehaviour
         GetComponent<PlayerAction>().enabled = false;
         GetComponent<PlayerLife>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
-        GameObject.Find("BattleMaster").GetComponent<BattleMaster>().ShowDeadUI();
+        GameObject.Find("GameManager").GetComponent<BattleMaster>().ShowDeadUI();
     }
 }
