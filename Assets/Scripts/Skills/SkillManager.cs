@@ -29,6 +29,9 @@ public class SkillManager : MonoBehaviour
     [SerializeField]
     public WeaponEffect weaponEffect;
 
+    [SerializeField]
+    public PlayerLife playerLife;
+
 
     // test parameter
     public float timer = 0f;
@@ -74,11 +77,15 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
-        if(timer > 5f)
+        // timer += Time.deltaTime;
+        // if(timer > 5f)
+        // {
+        //     AfterCycle();
+        //     timer -= 5f;
+        // }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            AfterCycle();
-            timer -= 5f;
+            SkillDetection("tnt");
         }
     }
 
@@ -118,9 +125,9 @@ public class SkillManager : MonoBehaviour
             case "hot":
                 ActionHot();
                 break;
-            case "cut":
-                ActionCut();
-                break;
+            // case "cut":
+            //     ActionCut();
+            //     break;
             case "aim":
                 ActionAim();
                 break;
@@ -130,9 +137,9 @@ public class SkillManager : MonoBehaviour
             case "ice":
                 ActionIce();
                 break;
-            case "wet":
-                ActionWet();
-                break;
+            // case "wet":
+            //     ActionWet();
+            //     break;
             case "tox":
                 ActionTox();
                 break;
@@ -167,6 +174,7 @@ public class SkillManager : MonoBehaviour
     private void ActionFix()
     {
         // heal one hp
+        playerLife.RequestChangeLife(20);
     }
 
     private void ActionHot()

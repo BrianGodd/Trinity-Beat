@@ -24,7 +24,7 @@ public class TntEntity : MonoBehaviour
     void Start()
     {
         // in Spawned
-        Transform player = FindMyPlayerTransform(); //TODO: Get player transform
+        Transform player = FindMyPlayerTransform(); 
         StartCoroutine(BlinkRoutine());
         pv = GetComponent<PhotonView>();
     }
@@ -45,6 +45,10 @@ public class TntEntity : MonoBehaviour
         }
 
         TriggerEffect();
+        if (!pv.IsMine) yield break;
+
+        yield return new WaitForSeconds(1f);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     void TriggerEffect()

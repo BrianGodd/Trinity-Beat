@@ -53,12 +53,20 @@ public class DogEntity : SummonedEntity
         dist.y = 0;
         if(dist.magnitude < 1f)
         {
-            animator.SetBool("isWalking", false);
+            if (!isMoving)
+            {
+                StopMovement();
+            }
+
         }
         else
         {
+            if (!isMoving)
+            {
+                BeginMovement();
+                animator.SetBool("isWalking", true);
+            }
             agent.SetDestination(closestPlayer.position);
-            animator.SetBool("isWalking", true);
         }
     }
     
@@ -72,6 +80,7 @@ public class DogEntity : SummonedEntity
 
     public void StopMovement()
     {
+        animator.SetBool("isWalking", false);
         isMoving = false;
         agent.isStopped = true;
     }

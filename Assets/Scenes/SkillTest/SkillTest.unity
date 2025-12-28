@@ -164,6 +164,7 @@ MonoBehaviour:
     prefab: {fileID: 8273452274145971613, guid: badcfe057bb82134a959cf1b5b7422bd, type: 3}
   summonedEntities: []
   weaponEffect: {fileID: 372555704}
+  playerLife: {fileID: 0}
   timer: 0
 --- !u!4 &51382632
 Transform:

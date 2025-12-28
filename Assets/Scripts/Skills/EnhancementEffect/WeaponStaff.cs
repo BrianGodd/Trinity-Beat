@@ -18,6 +18,7 @@ public class WeaponStaff : WeaponEffect
         delta.Normalize();
         delta *= (AimLifeCycle > 0?0.5f:1f) * (RNGLifeCycle > 0?2f:1f);
         dir += delta;
+        dir.y = 0;
         dir.Normalize();
         GameObject newAttackObject = Instantiate(attackObject, startPoint.position, startPoint.rotation);
         if(AOELifeCycle > 0)

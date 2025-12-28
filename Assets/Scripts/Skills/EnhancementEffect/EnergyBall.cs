@@ -18,7 +18,6 @@ public class EnergyBall : MonoBehaviour
     void Start()
     {
         originalPosition = transform.position;
-        
     }
 
     // Update is called once per frame
@@ -72,9 +71,15 @@ public class EnergyBall : MonoBehaviour
     }
     void OnTriggerEnter(Collider other)
     {
+        PlayerLife playerLife = other.GetComponent<PlayerLife>();
+        if(playerLife == null)
+        {
+            // playerLife.pv.IsMine
+            return;
+        }
         // 處理被攻擊
         Debug.Log("Attack by " + enhancementEffect);
-        float damage = 1f;
+        float damage = -20f;
         switch (enhancementEffect)
         {
             case WeaponEffect.EnhancementEffect.Hot:
@@ -85,7 +90,6 @@ public class EnergyBall : MonoBehaviour
                 break;
             case WeaponEffect.EnhancementEffect.Tox:
                 // other.GetComponent<HPSystem>().isToxic = true;
-
                 break;
             case WeaponEffect.EnhancementEffect.Wet:
 
@@ -94,6 +98,7 @@ public class EnergyBall : MonoBehaviour
                 break;
 
         }
+        playerLife.RequestChangeLife((int)damage);
         // other.GetComponent<HPSystem>().TakeDamage(damage);
 
     }
