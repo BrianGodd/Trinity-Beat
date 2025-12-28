@@ -83,10 +83,10 @@ public class SkillManager : MonoBehaviour
         //     AfterCycle();
         //     timer -= 5f;
         // }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SkillDetection("tnt");
-        }
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     SkillDetection("tnt");
+        // }
     }
 
     public void AddIntoEntitiesList(SummonedEntity summonedEntity)
