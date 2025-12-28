@@ -9823,6 +9823,7 @@ GameObject:
   - component: {fileID: -4557115508939480105}
   - component: {fileID: 5741053913216352359}
   - component: {fileID: 3874885117577136949}
+  - component: {fileID: 5496334068378705464}
   m_Layer: 7
   m_Name: pfb_eff_ice02
   m_TagString: Damage
@@ -14719,6 +14720,19 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &5496334068378705464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347508099352505736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e488a796f9a024ab3e2c8fdc9985ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerViewID: -1
 --- !u!1 &575986686374941232
 GameObject:
   m_ObjectHideFlags: 0

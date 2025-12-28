@@ -11,7 +11,7 @@ public class PunSetting : MonoBehaviourPunCallbacks
     //public SoundManager SM;
     //public Animator FadeAnim;
     public TextMeshProUGUI PlayerNum, ButtonName;
-    public TMP_InputField RoomName;
+    public TMP_InputField RoomName, PlayerName;
     public bool isDebugRoom = false;
     // Start is called before the first frame update
     void Start()
@@ -55,7 +55,12 @@ public class PunSetting : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        if(PhotonNetwork.InRoom) PlayerNum.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers;
+        if(PhotonNetwork.InRoom) 
+        {
+            PlayerNum.text = "Players: " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + PhotonNetwork.CurrentRoom.MaxPlayers;
+            //change network player name
+            PhotonNetwork.NickName = PlayerName.text;
+        }
     }
 
     public void JoinLobby()

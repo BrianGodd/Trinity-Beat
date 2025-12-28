@@ -37,6 +37,19 @@ public class ComboRecorder : MonoBehaviour
     public bool logInputs = true;
     public bool logMisses = true;
     public bool logIgnoredExtraInputs = false;
+
+    [Header("Cycle Gating")]
+    [Min(1)] public int castEveryNCycles = 2;  // 2 => every other cycle
+    [Min(0)] public int castCycleOffset = 0;   // 0 => cycles 0,2,4... are input/cast cycles
+    public bool logSkippedCycles = true;
+
+    bool IsInputCycle(int cycle)
+    {
+        int m = castEveryNCycles;
+        int x = (cycle - castCycleOffset) % m;
+        if (x < 0) x += m;
+        return x == 0;
+    }
     
 
     [Serializable]
@@ -106,8 +119,16 @@ public class ComboRecorder : MonoBehaviour
         if (beatInCycle == 0)
             EnsureCombo(cycleIndex);
 
+        //if (beatInCycle == 3)
+          //  CastCycle(cycleIndex);
         if (beatInCycle == 3)
-            CastCycle(cycleIndex);
+        {
+            if (IsInputCycle(cycleIndex))
+                CastCycle(cycleIndex);
+            else if (logSkippedCycles)
+                Debug.Log($"[Skip Cast] cycle={cycleIndex} (action-only cycle)");
+        }
+
     }
 
     private void Update()
@@ -123,6 +144,12 @@ public class ComboRecorder : MonoBehaviour
         }
     }
 
+    public void ResetAllState()
+    {
+        // clears stored combos and last combo
+        _combos.Clear();
+        LastCombo = null;
+    }
     private void HandleKeyPress(InputBindingMap.Entry e)
     {
         double pressTime = beatClock.Now;
@@ -173,6 +200,13 @@ public class ComboRecorder : MonoBehaviour
 
         combo.hits[slot012] = hit;
         LastCombo = combo;
+
+        if (!IsInputCycle(cycleIndex))
+        {
+            if (logSkippedCycles)
+                Debug.Log($"[Skip Input] cycle={cycleIndex} slot={slot012} (action-only cycle)");
+            return;
+        }
 
         OnHitRecorded?.Invoke(hit);
 

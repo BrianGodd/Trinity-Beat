@@ -189,8 +189,8 @@ public class PlayerLife : MonoBehaviour
             if (dmgPv == null) return;
 
             if (dmgPv.Owner == pv.Owner) return;
-            Debug.Log($"Hit by damage object owned by: {dmgPv.ViewID}");
-            RequestChangeLife(-20, dmgPv.ViewID);
+            Debug.Log($"Hit by damage object owned by: {dmgPv.transform.GetComponent<Skill>()?.ownerViewID}");
+            RequestChangeLife(-20, dmgPv.transform.GetComponent<Skill>().ownerViewID);
         }
     }
 
