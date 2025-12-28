@@ -6,7 +6,7 @@ using TMPro;
 public class TypingSync : MonoBehaviour
 {
     PhotonView pv;
-    public TextMeshPro textMeshPro;
+    public TextMeshProUGUI textMeshPro;
 
     void Start()
     {
