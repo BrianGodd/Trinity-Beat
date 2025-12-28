@@ -169,6 +169,9 @@ public class PlayerAction : MonoBehaviour
                         if (skillComp != null)
                             skillComp.ownerViewID = (pv != null) ? pv.ViewID : -1;
                     }
+
+                    // destroy after some time
+                    StartCoroutine(DestroyAfter(skillObj));
                 }
                 break;
 
@@ -179,6 +182,13 @@ public class PlayerAction : MonoBehaviour
                 // optionally set a parry flag / enable parry collider (not implemented here)
                 break;
         }
+    }
+
+    IEnumerator DestroyAfter(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
+        if (obj != null)
+            PhotonNetwork.Destroy(obj);
     }
 
     // revert or stop effects started above

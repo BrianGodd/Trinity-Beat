@@ -3494,6 +3494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thunderPrefab: {fileID: 2014197208028740002, guid: c740b4953c7fc904b96847bb87b0e078, type: 3}
+  hintPrefab: {fileID: 2288906131742633251, guid: e65b3da5073071541972119217db0ce7, type: 3}
   thunderRadius: 27.3
   thunderInnerRadius: 12.7
   thunderYOffset: 0

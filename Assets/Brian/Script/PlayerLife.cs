@@ -127,7 +127,18 @@ public class PlayerLife : MonoBehaviour
     void PlayHealEffect(int amount)
     {
         if (animator != null) animator.SetTrigger("heal");
-        if (healEffectPrefab != null) Instantiate(healEffectPrefab, transform.position + Vector3.up * 1f, Quaternion.identity);
+        if (healEffectPrefab != null) 
+        {
+            GameObject healEffect = PhotonNetwork.Instantiate(healEffectPrefab.name, transform.position + Vector3.up * 1f, Quaternion.identity);
+            StartCoroutine(DestroyAfter(healEffect));
+        }
+    }
+
+    IEnumerator DestroyAfter(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
+        if (obj != null)
+            PhotonNetwork.Destroy(obj);
     }
 
     void UpdateLifeSegments()

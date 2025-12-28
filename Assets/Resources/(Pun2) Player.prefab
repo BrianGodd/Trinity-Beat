@@ -6471,7 +6471,7 @@ MonoBehaviour:
   maxLife: 100
   startLife: 100
   hitEffectPrefab: {fileID: 0}
-  healEffectPrefab: {fileID: 0}
+  healEffectPrefab: {fileID: 1244122478412295369, guid: 934301cd626921d47a91cb9da043c580, type: 3}
   lifeSegments:
   - {fileID: 4972959131142677969}
   - {fileID: 4239853875282284353}

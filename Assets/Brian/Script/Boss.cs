@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Boss : MonoBehaviour
 {
-    public GameObject thunderPrefab;
+    public GameObject thunderPrefab, hintPrefab;
 
     [Header("Spawn Area")]
     public float thunderRadius = 5f;
@@ -18,10 +18,37 @@ public class Boss : MonoBehaviour
     public Color gizmoColor = new Color(1f, 0.5f, 0f, 0.6f);
     public Color gizmoInnerColor = new Color(1f, 0.2f, 0.2f, 0.5f);
 
-    public void SpawnThunder(Vector3 pos)
+    /*public void SpawnThunder(Vector3 pos)
     {
         if (thunderPrefab == null && !PhotonNetwork.IsMasterClient) return;
         PhotonNetwork.Instantiate(thunderPrefab.name, pos, Quaternion.identity);
+    }*/
+
+    IEnumerator SpawnThunder(Vector3 pos)
+    {
+        if (thunderPrefab == null) yield break;
+        if (!PhotonNetwork.IsMasterClient) yield break;
+
+        Vector3 hintPos = new Vector3(pos.x, pos.y, pos.z);
+        GameObject hint = PhotonNetwork.Instantiate(hintPrefab.name, hintPos, Quaternion.identity);
+
+        yield return new WaitForSeconds(1.0f); // wait before thunder strike
+        
+        // despawn hint object
+        PhotonNetwork.Destroy(hint);
+
+        GameObject lightning = PhotonNetwork.Instantiate(thunderPrefab.name, pos, Quaternion.identity);
+
+        StartCoroutine(DestroyAfter(lightning));
+
+        yield return null;
+    }
+
+    IEnumerator DestroyAfter(GameObject obj)
+    {
+        yield return new WaitForSeconds(1f);
+        if (obj != null)
+            PhotonNetwork.Destroy(obj);
     }
 
     // sample a random point inside the annulus (XZ plane) and spawn thunder at fixed Y (boss.y + offset)
@@ -29,7 +56,7 @@ public class Boss : MonoBehaviour
     {
         Vector2 sample = SamplePointInAnnulus(thunderInnerRadius, thunderRadius);
         Vector3 spawnPos = transform.position + new Vector3(sample.x, thunderYOffset, sample.y);
-        SpawnThunder(spawnPos);
+        StartCoroutine(SpawnThunder(spawnPos));
     }
 
     // spawn multiple thunder strikes at random positions

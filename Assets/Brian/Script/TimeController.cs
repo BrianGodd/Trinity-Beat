@@ -10,7 +10,7 @@ public class TimeController : MonoBehaviourPunCallbacks
     public GameObject dustPrefab, CountDownPrefab;
     public List<Transform> spawnPos = new List<Transform>();
 
-    const double INTERVAL = 60.0;
+    const double INTERVAL = 120.0;
 
     double startTime;
     int lastTick = 0;
