@@ -174,26 +174,26 @@ public class PlayerLife : MonoBehaviour
 
     void HandleDeath(int attackerViewID)
     {
-        if (animator != null)
-            animator.SetTrigger("dead");
-
-        PhotonView skillPv = PhotonView.Find(attackerViewID);
-        GameObject skillObj = skillPv != null ? skillPv.gameObject : null;
-
-        // 再從招式推回玩家
-        Photon.Realtime.Player killerPlayer = skillPv != null ? skillPv.Owner : null;
-
-        Debug.Log(
-            $"Killed by skill: {skillObj?.name}, " +
-            $"Owner: {killerPlayer?.NickName}"
-        );
-
-        GameObject.Find("GameManager").GetComponent<BattleMaster>().SomeOneDead();
-
         if (pv.IsMine)
         {
+            if (animator != null)
+                animator.SetTrigger("dead");
+
+            PhotonView skillPv = PhotonView.Find(attackerViewID);
+            GameObject skillObj = skillPv != null ? skillPv.gameObject : null;
+
+            // 再從招式推回玩家
+            Photon.Realtime.Player killerPlayer = skillPv != null ? skillPv.Owner : null;
+
+            Debug.Log(
+                $"Killed by skill: {skillObj?.name}, " +
+                $"Owner: {killerPlayer?.NickName}"
+            );
+
             GetComponent<PlayerController>()?.PlayerDeath(skillObj);
         }
+
+        GameObject.Find("GameManager").GetComponent<BattleMaster>().SomeOneDead();
     }
 
     void OnTriggerEnter(Collider other)

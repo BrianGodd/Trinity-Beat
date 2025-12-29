@@ -7,6 +7,7 @@ public class BattleMaster : MonoBehaviour
 {
     public RectTransform UIRect;
     public GameObject deathEffectPrefab, winEffectPrefab;
+    public GameObject exitButtonPrefab;
 
     public int deadCount = 0;
     public int playerCount = 0;
@@ -31,6 +32,7 @@ public class BattleMaster : MonoBehaviour
         cd.transform.parent = UIRect;
         cd.transform.localPosition = Vector3.zero;
         isDead = true;
+        StartCoroutine(ShowExitUI());
     }
 
     public void SomeOneDead()
@@ -49,6 +51,19 @@ public class BattleMaster : MonoBehaviour
         if(isDead) return;
         GameObject cd = Instantiate(winEffectPrefab);
         cd.transform.parent = UIRect;
-        cd.transform.localPosition = Vector3.zero;   
+        cd.transform.localPosition = Vector3.zero;
+        StartCoroutine(ShowExitUI());   
+    }
+
+    IEnumerator ShowExitUI()
+    {
+        yield return new WaitForSeconds(3f);
+        exitButtonPrefab.SetActive(true);
+    }
+
+    public void ExitToLobby()
+    {
+        Photon.Pun.PhotonNetwork.LeaveRoom();
+        Photon.Pun.PhotonNetwork.LoadLevel(0);
     }
 }

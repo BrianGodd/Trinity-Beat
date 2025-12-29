@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath(GameObject killer)
     {
         vcam.Follow = killer.transform;
-        vcam.LookAt = killer.transform;
+        //vcam.LookAt = killer.transform;
         GetComponent<PlayerAction>().enabled = false;
         GetComponent<PlayerLife>().enabled = false;
         GetComponent<PlayerController>().enabled = false;
