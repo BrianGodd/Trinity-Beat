@@ -10,6 +10,9 @@ public class TimeController : MonoBehaviourPunCallbacks
     public GameObject dustPrefab, CountDownPrefab;
     public List<Transform> spawnPos = new List<Transform>();
 
+    public RhythmSongPlayer songPlayer;
+    public SongData defaultSong;
+
     const double INTERVAL = 120.0;
 
     double startTime;
@@ -55,6 +58,12 @@ public class TimeController : MonoBehaviourPunCallbacks
             {
                 cd.GetComponent<TextMeshProUGUI>().text = "Start";
                 cd.GetComponent<TextMeshProUGUI>().fontSize = 80;
+                if (songPlayer == null) songPlayer = FindObjectOfType<RhythmSongPlayer>();
+                //if (songPlayer == null || defaultSong == null) return;
+
+                //songPlayer.LoadSong(defaultSong);
+                //yield return new WaitForSeconds(5f);
+                songPlayer.LoadSong(defaultSong, false);
             }
             else cd.GetComponent<TextMeshProUGUI>().text = i.ToString();
             cd.transform.parent = UIRect;
@@ -62,6 +71,7 @@ public class TimeController : MonoBehaviourPunCallbacks
             Destroy(cd, 1.5f);
             if(i > 0) yield return new WaitForSeconds(1);       
         }
+        
     }
 
     public void StartTimer()

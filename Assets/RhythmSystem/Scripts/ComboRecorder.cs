@@ -43,18 +43,47 @@ public class ComboRecorder : MonoBehaviour
     [Min(0)] public int castCycleOffset = 0;   // 0 => cycles 0,2,4... are input/cast cycles
     public bool logSkippedCycles = true;
 
-    bool IsInputCycle(int cycle)
-    {
-        int m = castEveryNCycles;
-        int x = (cycle - castCycleOffset) % m;
-        if (x < 0) x += m;
-        return x == 0;
-    }
+
+[Header("Triple-Miss Recovery (optional)")]
+[Tooltip("If enabled: when an INPUT cycle ends with 3 misses (no valid inputs in any of the 3 slots), the NEXT cycle becomes an input/cast cycle (phase shifts by 1).")]
+public bool enableRecoveryAfterTripleMiss = false;
+
+[Tooltip("How many misses required to trigger recovery. For 3-slot input cycles, keep this at 3.")]
+[Range(1, 3)] public int missesToTriggerRecovery = 3;
+
+int _runtimeCastCycleOffset;
+
     
+/// <summary>
+/// Returns true if this cycle is an input/cast cycle (i.e., we accept inputs and emit OnComboReady at beat3).
+/// When enableRecoveryAfterTripleMiss is ON, this uses a runtime offset that may shift during play.
+/// </summary>
+bool IsInputCycle(int cycle)
+{
+    int m = Mathf.Max(1, castEveryNCycles);
+    int offset = enableRecoveryAfterTripleMiss ? _runtimeCastCycleOffset : castCycleOffset;
+
+    int x = (cycle - offset) % m;
+    if (x < 0) x += m;
+    return x == 0;
+}
+
+/// <summary>
+/// UI/other systems can query cycle gating without side-effects.
+/// </summary>
+public bool IsCycleInputEnabled(int cycleIndex) => IsInputCycle(cycleIndex);
+
+static int PositiveMod(int value, int mod)
+{
+    int x = value % mod;
+    if (x < 0) x += mod;
+    return x;
+}
 
     [Serializable]
     public struct Hit
     {
+        public int cycleIndex;
         public bool hasInput;
 
         public int beatSlot; // 0..2
@@ -98,6 +127,7 @@ public class ComboRecorder : MonoBehaviour
 
     private void OnEnable()
     {
+        _runtimeCastCycleOffset = castCycleOffset;
         if (beatClock != null)
             beatClock.OnBeat += HandleBeat;
     }
@@ -121,13 +151,38 @@ public class ComboRecorder : MonoBehaviour
 
         //if (beatInCycle == 3)
           //  CastCycle(cycleIndex);
-        if (beatInCycle == 3)
+if (beatInCycle == 3)
+{
+    if (IsInputCycle(cycleIndex))
+    {
+        // Optional: if player missed all 3 slots in this INPUT cycle, shift phase so NEXT cycle is also an input cycle.
+        if (enableRecoveryAfterTripleMiss && missesToTriggerRecovery >= 1)
         {
-            if (IsInputCycle(cycleIndex))
-                CastCycle(cycleIndex);
-            else if (logSkippedCycles)
-                Debug.Log($"[Skip Cast] cycle={cycleIndex} (action-only cycle)");
+            var combo = EnsureCombo(cycleIndex);
+            int hitCount = 0;
+            for (int i = 0; i < 3; i++) if (combo.hits[i].hasInput) hitCount++;
+
+            int missCount = 3 - hitCount;
+            if (missCount >= missesToTriggerRecovery)
+            {
+                int m = Mathf.Max(1, castEveryNCycles);
+                _runtimeCastCycleOffset = PositiveMod(cycleIndex + 1, m);
+
+                if (logSkippedCycles)
+                    Debug.Log($"[Recovery] cycle={cycleIndex} had {missCount} misses -> next cycle becomes INPUT (runtimeOffset={_runtimeCastCycleOffset}).");
+            }
         }
+
+        CastCycle(cycleIndex);
+    }
+    else if (logSkippedCycles)
+    {
+        Debug.Log($"[Skip Cast] cycle={cycleIndex} (action-only cycle)");
+    }
+
+    // always cleanup older cycles to prevent dictionary growth
+    _combos.Remove(cycleIndex - 2);
+}
 
     }
 
@@ -149,6 +204,7 @@ public class ComboRecorder : MonoBehaviour
         // clears stored combos and last combo
         _combos.Clear();
         LastCombo = null;
+        _runtimeCastCycleOffset = castCycleOffset;
     }
     private void HandleKeyPress(InputBindingMap.Entry e)
     {
@@ -169,6 +225,13 @@ public class ComboRecorder : MonoBehaviour
             return;
         }
 
+        if (!IsInputCycle(cycleIndex))
+        {
+            if (logSkippedCycles)
+                Debug.Log($"[Skip Input] cycle={cycleIndex} (action-only cycle)");
+            return;
+        }
+
         var combo = EnsureCombo(cycleIndex);
 
         if (combo.hits[slot012].hasInput)
@@ -186,6 +249,7 @@ public class ComboRecorder : MonoBehaviour
 
         var hit = new Hit
         {
+            cycleIndex = cycleIndex,
             hasInput = true,
             beatSlot = slot012,
             key = e.key,
@@ -201,16 +265,10 @@ public class ComboRecorder : MonoBehaviour
         combo.hits[slot012] = hit;
         LastCombo = combo;
 
-        if (!IsInputCycle(cycleIndex))
-        {
-            if (logSkippedCycles)
-                Debug.Log($"[Skip Input] cycle={cycleIndex} slot={slot012} (action-only cycle)");
-            return;
-        }
-
         OnHitRecorded?.Invoke(hit);
 
-        typingSync.ChangeWord(slot012, glyphChar);
+        if (typingSync != null)
+            typingSync.ChangeWord(slot012, glyphChar);
 
         if (logInputs)
         {
@@ -235,6 +293,7 @@ public class ComboRecorder : MonoBehaviour
         {
             combo.hits[i] = new Hit
             {
+                cycleIndex = cycleIndex,
                 hasInput = false,
                 beatSlot = i,
                 key = KeyCode.None,

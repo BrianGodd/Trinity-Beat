@@ -25,10 +25,9 @@ public class RhythmDebugUI : MonoBehaviour
     public Color missColor    = new Color(1f, 0.2f, 0.2f, 0.9f);
     public Color cueColor     = new Color(0.2f, 0.6f, 1f, 0.9f);
 
-    [Header("Cycle Gating Visual")]
-    public bool doubleCycleGate = true; // cycle 0 input, cycle 1 no-input, cycle 2 input...
-    public Color noInputCycleColor = new Color(1f, 1f, 1f, 0.12f);
-    [Min(0.1f)] public float noInputCycleScale = 0.9f;
+[Header("No-Input Cycle Visual")]
+public Color noInputCycleColor = new Color(1f, 1f, 1f, 0.12f);
+[Min(0.1f)] public float noInputCycleScale = 0.85f;
 
     [Header("Cue / Pulse")]
     public bool showExpectedCuePulse = true;
@@ -142,13 +141,16 @@ public class RhythmDebugUI : MonoBehaviour
             return false;
         return true;
     }
-    
-    bool IsInputCycle(int cycle)
-    {
-        if (!doubleCycleGate) return true;
-        // First cycle is cycle 0 => input cycle. Second cycle is cycle 1 => no-input cycle.
-        return (cycle % 2) == 0;
-    }
+
+bool IsInputCycle(int cycle)
+{
+    // Use recorder's gating (supports runtime phase shift / recovery).
+    if (comboRecorder != null)
+        return comboRecorder.IsCycleInputEnabled(cycle);
+
+    // Fallback (shouldn't happen if ValidateRefs passes)
+    return true;
+}
 
     public void ResetVisual()
     {
@@ -253,29 +255,19 @@ public class RhythmDebugUI : MonoBehaviour
     void RefreshCircleStatesForCycle(int cycle)
     {
         var arr = EnsureCycleState(cycle);
-        bool inputCycle = IsInputCycle(cycle);
-
+        bool isInputCycle = IsInputCycle(cycle);
 
         for (int i = 0; i < 3; i++)
         {
-            // base color by state
-            //if (arr[i].hit) _circleImg[i].color = hitColor;
-            //else if (arr[i].miss) _circleImg[i].color = missColor;
-            //else _circleImg[i].color = defaultColor;
-            if (!inputCycle)
+            if (!isInputCycle)
             {
-                // Not your turn: force a distinct dim style
                 _circleImg[i].color = noInputCycleColor;
                 _circleRT[i].localScale = Vector3.one * noInputCycleScale;
-
-                // Hide hit dot in no-input cycle (so it doesn't look like you're judged)
-                if (showHitDot && _dotRT[i] != null)
-                    _dotRT[i].gameObject.SetActive(false);
-
+                if (showHitDot && _dotRT[i] != null) _dotRT[i].gameObject.SetActive(false);
                 continue;
             }
 
-            // Input cycle: normal behavior
+            // base color by state
             if (arr[i].hit) _circleImg[i].color = hitColor;
             else if (arr[i].miss) _circleImg[i].color = missColor;
             else _circleImg[i].color = defaultColor;
@@ -366,6 +358,7 @@ public class RhythmDebugUI : MonoBehaviour
     void TryCuePulse(int cycle, double prevNow, double now)
     {
         if (!IsInputCycle(cycle)) return;
+
         // If a slot is already hit/missed, don't cue it
         var arr = EnsureCycleState(cycle);
 
