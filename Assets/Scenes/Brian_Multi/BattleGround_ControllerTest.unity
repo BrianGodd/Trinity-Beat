@@ -274375,7 +274375,7 @@ MonoBehaviour:
   m_OverrideVoxelSize: 0
   m_VoxelSize: 0.11666667
   m_MinRegionArea: 2
-  m_NavMeshData: {fileID: 23800000, guid: b3b2e7427ae016043b8aed570b5a2916, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: 028195540ffb30f4a962ce4eda56c117, type: 2}
   m_BuildHeightMesh: 0
 --- !u!4 &1182615397
 Transform:
@@ -293997,6 +293997,8 @@ MonoBehaviour:
   - {fileID: 92895009}
   - {fileID: 260743951}
   - {fileID: 1994314286}
+  songPlayer: {fileID: 0}
+  defaultSong: {fileID: 0}
 --- !u!1001 &1270469871
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -366697,9 +366699,17 @@ MonoBehaviour:
   comboRecorder: {fileID: 1572543018}
   debugAudio: {fileID: 1572543016}
   debugUI: {fileID: 1572543013}
+  extraUIResetTargets: []
   midgameMusicAutostartDelaySec: 0
   musicAutostartDelaySec: 3
   scheduleLeadSec: 0
+  useClipDurationForLoopSync: 1
+  enableMetronome: 0
+  beatTickClip: {fileID: 0}
+  barTickClip: {fileID: 0}
+  tickVolume: 1
+  tickScheduleAheadSec: 0.5
+  tickPoolSize: 16
 --- !u!114 &1572543013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366723,7 +366733,6 @@ MonoBehaviour:
   hitColor: {r: 0.2, g: 1, b: 0.2, a: 0.9}
   missColor: {r: 1, g: 0.2, b: 0.2, a: 0.9}
   cueColor: {r: 1, g: 0.9664602, b: 0.19999999, a: 0.34509805}
-  doubleCycleGate: 1
   noInputCycleColor: {r: 1, g: 1, b: 1, a: 0.12}
   noInputCycleScale: 0.9
   showExpectedCuePulse: 1
@@ -366927,6 +366936,8 @@ MonoBehaviour:
   castEveryNCycles: 2
   castCycleOffset: 0
   logSkippedCycles: 1
+  enableRecoveryAfterTripleMiss: 0
+  missesToTriggerRecovery: 3
 --- !u!114 &1572543019
 MonoBehaviour:
   m_ObjectHideFlags: 0
