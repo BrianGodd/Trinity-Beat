@@ -58,25 +58,32 @@ public class BeatClock : MonoBehaviour
         IsRunning = false;
     }
 
-    void Update()
+    // Replace BeatClock.Update() body with a catch-up loop:
+void Update()
+{
+    if (!IsRunning) return;
+
+    double t = Now - _startTime;
+    if (t < 0) return;
+
+    double beatDur = BeatDurationSec;
+    int absBeatIndex = (int)System.Math.Floor(t / beatDur);
+
+    if (_lastAbsBeatIndex == int.MinValue)
+        _lastAbsBeatIndex = absBeatIndex - 1;
+
+    if (absBeatIndex <= _lastAbsBeatIndex) return;
+
+    for (int b = _lastAbsBeatIndex + 1; b <= absBeatIndex; b++)
     {
-        if (!IsRunning) return;
-
-        double t = Now - _startTime;
-        if (t < 0) return; // not reached scheduled start yet (DSP-start)
-
-        double beatDur = BeatDurationSec;
-        int absBeatIndex = (int)Math.Floor(t / beatDur);
-        if (absBeatIndex == _lastAbsBeatIndex) return;
-
-        _lastAbsBeatIndex = absBeatIndex;
-
-        CurrentBeatInCycle = Mod(absBeatIndex, beatsPerCycle);
-        CurrentCycleIndex = absBeatIndex / beatsPerCycle;
-        CurrentBeatStartTime = _startTime + absBeatIndex * beatDur;
-
+        CurrentBeatInCycle = Mod(b, beatsPerCycle);
+        CurrentCycleIndex = b / beatsPerCycle;
+        CurrentBeatStartTime = _startTime + b * beatDur;
         OnBeat?.Invoke(CurrentBeatInCycle, CurrentCycleIndex, CurrentBeatStartTime);
     }
+
+    _lastAbsBeatIndex = absBeatIndex;
+}
 
     static int Mod(int a, int m)
     {

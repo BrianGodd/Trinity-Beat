@@ -15,8 +15,8 @@ MonoBehaviour:
   title: "\u30AB\u30EF\u30AD\u30F2\u30A2\u30E1\u30AF"
   albumCover: {fileID: 2800000, guid: 76eeb111a0888be4f86806de83f5eb14, type: 3}
   bgm: {fileID: 8300000, guid: 0f288c34ef7d42b4385ad6ef4dd6ea1d, type: 3}
-  loop: 0
+  loop: 1
   bpm: 129
-  beat0OffsetSec: 0.84
+  beat0OffsetSec: 0.85
   timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
-  tutorialCycles: 1
+  tutorialCycles: 0

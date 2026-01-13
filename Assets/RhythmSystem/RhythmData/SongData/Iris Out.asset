@@ -17,6 +17,6 @@ MonoBehaviour:
   bgm: {fileID: 8300000, guid: d38bb4ff4184e484f8284ed595760459, type: 3}
   loop: 1
   bpm: 135
-  beat0OffsetSec: 4.21
+  beat0OffsetSec: 4.22
   timingPattern: {fileID: 11400000, guid: fe1bf7825de96be418015f4b5b6e04db, type: 2}
   tutorialCycles: 0
